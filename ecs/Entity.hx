@@ -8,6 +8,7 @@ import turbo.ecs.components.ImageComponent;
 import turbo.ecs.components.KeyboardInputComponent;
 import turbo.ecs.components.MouseClickComponent;
 import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.TextComponent;
 import turbo.ecs.components.VelocityComponent;
 
 class Entity
@@ -132,6 +133,12 @@ class Entity
             this.add(new PositionComponent(0, 0, this));
         }
 
+        return this;
+    }
+
+    public function text(message:String, fontSize:Int = 36):Entity
+    {
+        this.add(new TextComponent(message, fontSize, this));
         return this;
     }
 
