@@ -7,8 +7,7 @@ class TextComponent extends AbstractComponent
 {
      // Used to auto-add to the current state
     public static var onAdd:TextComponent->Void;
-    public static var onRemove:TextComponent->Void;
-    
+    public static var onRemove:TextComponent->Void;    
     public var text(default, null):FlxText;
 
     public function new(message:String, fontSize:Int, parent:Entity)
@@ -21,6 +20,11 @@ class TextComponent extends AbstractComponent
         {
             TextComponent.onAdd(this);
         }
+    }
+
+    public function setText(message:String):Void
+    {
+        this.text.text = message;
     }
 
     override public function update(elapsedSeconds:Float):Void
