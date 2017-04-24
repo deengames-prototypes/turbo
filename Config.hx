@@ -37,6 +37,11 @@ class Config
     {
         values = new Map<String, Any>();
         var text = openfl.Assets.getText("assets/data/config.json");
+
+        // Remove comments
+        var regex = new EReg("//.*", "g");
+        text = regex.replace(text, "");
+
         var json = haxe.Json.parse(text);
         // Inspired by JsonPrinter.objString
         var fields = Reflect.fields(json);
