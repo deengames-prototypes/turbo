@@ -40,9 +40,14 @@ class MouseClickComponent extends AbstractComponent
                 throw "Can't add mouse-click to a colour with a null sprite!";
             }
         }
+        else if (parent.has(TextComponent))
+        {
+            var text = parent.get(TextComponent);
+            FlxMouseEventManager.add(text.text, this.mouseDown, this.mouseUp);
+        }
         else
         {
-            throw "Can't add mouse-click component without an image or colour!";
+            throw "Can't add mouse-click component without an image or colour or text!";
         }
     }
 
