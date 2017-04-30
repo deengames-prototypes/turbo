@@ -62,6 +62,12 @@ class Entity
         {
             img.sprite.alpha = 0;
         }
+
+        var text = this.get(TextComponent);
+        if (text != null)
+        {
+            text.text.alpha = 0;
+        }
         return this;
     }
     
@@ -107,6 +113,12 @@ class Entity
         if (img != null)
         {
             img.sprite.alpha = 1;
+        }
+
+        var text = this.get(TextComponent);
+        if (text != null)
+        {
+            text.text.alpha = 1;
         }
         return this;
     }
