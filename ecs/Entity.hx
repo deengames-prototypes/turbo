@@ -84,6 +84,9 @@ class Entity
     public function move(x:Float, y:Float):Entity
     {
         this.add(new PositionComponent(x, y, this));
+        // Make things move immediately, even if we didn't add the entity
+        // to the current state.
+        this.update(0);
         return this;
     } 
     
