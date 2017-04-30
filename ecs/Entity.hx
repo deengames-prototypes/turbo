@@ -114,6 +114,11 @@ class Entity
         {
             img.sprite.angle = angleInDegrees;
         }
+        var colour = this.get(ColourComponent);
+        if (colour != null)
+        {
+            colour.sprite.angle = angleInDegrees;
+        }
         return this;
     }
 
