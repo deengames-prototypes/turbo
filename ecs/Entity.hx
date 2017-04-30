@@ -106,6 +106,16 @@ class Entity
         this.everyFrame = callback;
         return this;
     }
+    
+    public function rotate(angleInDegrees:Int):Entity
+    {
+        var img = this.get(ImageComponent);
+        if (img != null)
+        {
+            img.sprite.angle = angleInDegrees;
+        }
+        return this;
+    }
 
     public function show():Entity
     {
