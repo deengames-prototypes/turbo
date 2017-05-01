@@ -193,6 +193,14 @@ class Entity
         var name = Type.getClassName(clazz);
         if (this.has(clazz))
         {
+            if (clazz == ColourComponent)
+            {
+                ColourComponent.onRemove(this.get(ColourComponent));
+            }
+            else if (clazz == TextComponent)
+            {
+                TextComponent.onRemove(this.get(TextComponent));
+            }
             this.remove(clazz);
         }
         this.components.set(name, component);
