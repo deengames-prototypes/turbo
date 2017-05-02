@@ -17,6 +17,8 @@ class Entity
     private var tags(default, null):Array<String>;
     private var data = new Map<String, Any>();
     private var everyFrame:Void->Void;
+    // Seconds from now => event to call
+    private var afterEvents = new Array<AfterEvent>();
 
     public function new()
     {
@@ -27,6 +29,18 @@ class Entity
     ////////////////////// Start fluent API //////////////////////
     // Please sort alphabetically
     
+    public function after(seconds:Float, callback:Void->Void):Entity
+    {
+        this.afterEvents.push(new AfterEvent(seconds, callback));
+        return this;
+    }
+
+    public function clearAfterEvents():Entity
+    {
+        this.afterEvents = new Array<AfterEvent>();
+        return this;
+    }
+
     // Calling colour without calling size (or vice-versa) should give sensible results
     // The default is a 32x32 red square
     public function colour(red:Int, green:Int, blue:Int):Entity
@@ -97,9 +111,9 @@ class Entity
         return this;
     }
     
-    public function onClick(callback:Float->Float->Void):Entity
+    public function onClick(callback:Float->Float->Void, isPixelPerfect:Bool = true):Entity
     {
-        var mouseComponent:MouseClickComponent = new MouseClickComponent(callback, null, this);
+        var mouseComponent:MouseClickComponent = new MouseClickComponent(callback, null, isPixelPerfect, this);
         this.add(mouseComponent);
         return this;
     }
@@ -260,6 +274,16 @@ class Entity
             component.update(elapsedSeconds);
         }
 
+        for (afterEvent in this.afterEvents)
+        {
+            afterEvent.seconds -= elapsedSeconds;
+            if (afterEvent.seconds <= 0)
+            {
+                afterEvent.callback();
+                this.afterEvents.remove(afterEvent);
+            }
+        }
+
         if (this.everyFrame != null)
         {
             this.everyFrame();
@@ -276,5 +300,17 @@ class Entity
     public function setData(key:String, data:Any):Void
     {
         this.data.set(key, data);
+    }
+}
+
+private class AfterEvent
+{
+    public var seconds(default, default):Float;
+    public var callback(default, null):Void->Void;
+
+    public function new(seconds:Float, callback:Void->Void)
+    {
+        this.seconds = seconds;
+        this.callback = callback;
     }
 }

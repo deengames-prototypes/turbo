@@ -10,7 +10,7 @@ class MouseClickComponent extends AbstractComponent
     private var mouseDownCallback:Float->Float->Void;
     private var mouseUpCallback:Float->Float->Void;
     
-    public function new(onMouseDown:Float->Float->Void, onMouseUp:Float->Float->Void = null, parent:Entity)
+    public function new(onMouseDown:Float->Float->Void, onMouseUp:Float->Float->Void = null, isPixelPerfect:Bool = true, parent:Entity)
     {
         super(parent);
         this.mouseDownCallback = onMouseDown;
@@ -21,7 +21,7 @@ class MouseClickComponent extends AbstractComponent
             var image = parent.get(ImageComponent);
             if (image.sprite != null)
             {
-                FlxMouseEventManager.add(image.sprite, this.mouseDown, this.mouseUp);
+                FlxMouseEventManager.add(image.sprite, this.mouseDown, this.mouseUp, null, null, false, true, isPixelPerfect);
             } 
             else
             {
@@ -33,7 +33,7 @@ class MouseClickComponent extends AbstractComponent
             var colour = parent.get(ColourComponent);
             if (colour.sprite != null)
             {
-                FlxMouseEventManager.add(colour.sprite, this.mouseDown, this.mouseUp);                
+                FlxMouseEventManager.add(colour.sprite, this.mouseDown, this.mouseUp, null, null, false, true, isPixelPerfect);                
             } 
             else
             {
@@ -43,7 +43,7 @@ class MouseClickComponent extends AbstractComponent
         else if (parent.has(TextComponent))
         {
             var text = parent.get(TextComponent);
-            FlxMouseEventManager.add(text.text, this.mouseDown, this.mouseUp);
+            FlxMouseEventManager.add(text.text, this.mouseDown, this.mouseUp, null, null, false, true, isPixelPerfect);
         }
         else
         {
