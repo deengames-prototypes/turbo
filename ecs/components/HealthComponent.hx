@@ -27,4 +27,10 @@ class HealthComponent extends AbstractComponent
             this.trigger("Death");
         }
     }
+
+    public function heal(health:Int):Void
+    {
+        this.currentHealth += health;
+        this.currentHealth = Std.int(Math.min(this.currentHealth, this.totalHealth));
+    }
 }
