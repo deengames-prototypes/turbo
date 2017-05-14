@@ -13,17 +13,29 @@ import turbo.ecs.components.VelocityComponent;
 
 class Entity
 {
+    public var tags(default, null):Array<String>;
+
     private var components:Map<String, AbstractComponent>;
-    private var tags(default, null):Array<String>;
+    // Can't write tags because we put entities in a hashmap based on tags, 
+    // and use that to determinte collisions. Erm, we have to reprocess
+    // the entity if its tags change.
     private var data = new Map<String, Any>();
     private var everyFrame:Void->Void;
     // Seconds from now => event to call
     private var afterEvents = new Array<AfterEvent>();
 
-    public function new()
+    public function new(tags:Array<String> = null)
     {
         this.components = new Map<String, AbstractComponent>();
-        this.tags = [];
+
+        if (tags == null)
+        {
+            this.tags = [];
+        }
+        else
+        {
+            this.tags = tags;
+        }
     }
         
     ////////////////////// Start fluent API //////////////////////
@@ -38,6 +50,21 @@ class Entity
     public function clearAfterEvents():Entity
     {
         this.afterEvents = new Array<AfterEvent>();
+        return this;
+    }
+
+    public function collideWith(tag:String):Entity
+    {
+        if (this.tags == null || this.tags.length == 0)
+        {
+            throw 'Cannot collide an entity (${this}) without tags!';
+        }
+
+        for (myTag in this.tags)
+        {
+            // I don't like this use of singleton-ish states.
+            TurboState.currentState.trackCollision(myTag, tag);
+        }
         return this;
     }
 
