@@ -121,6 +121,21 @@ class Entity
         }
         return this;
     }
+
+    // Don't move when resolving collisions
+    public function immovable():Entity
+    {
+        if (this.has(ColourComponent))
+        {
+            this.get(ColourComponent).sprite.immovable = true;
+        }
+        else if (this.has(ImageComponent))
+        {
+            this.get(ImageComponent).sprite.immovable = true;
+        }
+
+        return this;
+    }
     
     public function move(x:Float, y:Float):Entity
     {
