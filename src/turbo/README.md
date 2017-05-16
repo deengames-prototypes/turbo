@@ -1,14 +1,14 @@
-# Turbo
-Turbo is a batteries-included extension for HaxeFlixel. It includes an entity-component framework (and pre-built system), and others.
+# Nebula
+Nebula is a batteries-included extension for HaxeFlixel. It includes an entity-component framework (and pre-built system), and others.
 
 The entity-component system is inspired by the [Ash framework](http://ashframework.org/)'s design philosophy:
 - Components are pure data (no code)
 - Entities are just bags of components
 - Systems are thin and operate on just what they need
 
-Unlike Ash, Turbo doesn't use nodes (which seem like boilerplate code), with the trade-off that systems operate directly on entities.
+Unlike Ash, Nebula doesn't use nodes (which seem like boilerplate code), with the trade-off that systems operate directly on entities.
 
-Ash is also a framework; Turbo includes a set of systems for writing HaxeFlixel games. See the [list of systems](tree/master/turbo/ecs/system) in code.
+Ash is also a framework; Nebula includes a set of systems for writing HaxeFlixel games. See the [list of systems](tree/gh-pages/source/source/nebula/ecs/system) in code.
   
 Small example of a state with a orange square that responds to keyboard movement:
 
