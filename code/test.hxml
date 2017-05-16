@@ -1,0 +1,13 @@
+## JavaScript
+-main TestMain
+-lib noor
+-lib munit
+-lib hamcrest
+-cp src
+-cp test
+
+#-js build/js_test.js
+
+## Neko
+#--next
+-neko build/neko_test.n

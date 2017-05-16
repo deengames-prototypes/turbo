@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<meta title="FlixelUnitTests" version="1.0.0" />
+	<app file="TestMain" main="TestMain" />
+	
+	<set name="SWF_VERSION" value="11.8" />
+	<source path="../src" />
+	
+    <assets path="assets" />
+    
+	<set name="no-custom-backend" />
+	<set name="unit-test" />
+	
+	<haxelib name="munit" />
+	<haxelib name="flixel" />
+	<haxelib name="flixel-addons" />
+	<haxelib name="hamcrest" />
+	<haxelib name="noor" />
+	
+	<haxedef name="FLX_UNIT_TEST" />
+</project>
