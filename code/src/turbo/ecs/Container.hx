@@ -64,7 +64,7 @@ class Container
 
         for (system in this.systems)
         {
-            this.removeEntity(entity);
+            system.removeEntity(entity);
         }
     }
     

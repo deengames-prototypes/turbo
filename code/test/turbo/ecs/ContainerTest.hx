@@ -74,15 +74,32 @@ class ContainerTest
         var expected = new Entity();
         container.entityChanged(new Entity());
         container.entityChanged(expected);
-        Assert.areEqual(expected, s1.whoChanged);
-        Assert.areEqual(expected, s2.whoChanged);
+        Assert.areEqual(expected, s1.lastChanged);
+        Assert.areEqual(expected, s2.lastChanged);
+    }
+
+    @Test
+    public function removeEntityCallsRemoveEntityOnAllSystems()
+    {
+        var container = new Container();
+        var s1 = new DummySystem();
+        var s2 = new DummySystem();
+        container.addSystem(s1);
+        container.addSystem(s2);
+        
+        var e = new Entity();
+        container.entityChanged(e);
+        container.removeEntity(e);
+        Assert.areEqual(e, s1.lastRemoved);
+        Assert.areEqual(e, s2.lastRemoved);
     }
 }
 
 class DummySystem extends turbo.ecs.systems.AbstractSystem
 {
     public var lastUpdate(default, null):Float;
-    public var whoChanged(default, null):Entity;
+    public var lastRemoved(default, null):Entity;
+    public var lastChanged(default, null):Entity;
     
     public function new()
     {
@@ -96,6 +113,11 @@ class DummySystem extends turbo.ecs.systems.AbstractSystem
     
     override public function entityChanged(e:Entity):Void
     {
-        this.whoChanged = e;
+        this.lastChanged = e;
+    }
+
+    override public function removeEntity(e:Entity):Void
+    {
+        this.lastRemoved = e;
     }
 }
