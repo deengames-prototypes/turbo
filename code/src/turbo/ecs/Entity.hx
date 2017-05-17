@@ -240,9 +240,8 @@ class Entity
     
     public function onClick(callback:FlxSprite->Void, isPixelPerfect:Bool = true):Entity
     {
-        var mouseComponent:MouseClickComponent = new MouseClickComponent(isPixelPerfect);
-        mouseComponent.registerCallback(callback);
-        this.add(mouseComponent);
+        var mc:MouseClickComponent = new MouseClickComponent(callback, isPixelPerfect);
+        this.add(mc);
         return this;
     }
 
