@@ -57,6 +57,16 @@ class Container
             system.entityChanged(entity);
         }
     }
+
+    public function removeEntity(entity:Entity):Void
+    {
+        this.entities.remove(entity);
+
+        for (system in this.systems)
+        {
+            this.removeEntity(entity);
+        }
+    }
     
     public function addDefaultSystems():Void
     {

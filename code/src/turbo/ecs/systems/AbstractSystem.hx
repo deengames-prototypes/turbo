@@ -47,6 +47,11 @@ class AbstractSystem
             }
         }
     }
+
+    public function removeEntity(entity:Entity):Void
+    {
+        this.entities.remove(entity);
+    }
     
     private function doesHaveAllRequiredComponentTypes(entity:Entity):Bool
     {

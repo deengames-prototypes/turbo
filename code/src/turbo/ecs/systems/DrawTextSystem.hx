@@ -26,7 +26,7 @@ class DrawTextSystem extends AbstractSystem
         {
             var text:TextComponent = entity.get(TextComponent);
             var position:PositionComponent = entity.get(PositionComponent);
-
+            text.textField.text = text.text;
             text.textField.setPosition(position.x,position.y);
         }
     }
