@@ -1,7 +1,7 @@
 package turbo.ecs.systems;
 
 import flixel.FlxG;
-import flixel.FlxState;
+import flixel.input.mouse.FlxMouseEventManager;
 
 import turbo.ecs.components.MouseClickComponent;
 import turbo.ecs.components.SpriteComponent;
@@ -12,6 +12,7 @@ class MouseClickSystem extends AbstractSystem
     public function new()
     {
         super([MouseClickComponent, SpriteComponent]);
+        FlxG.plugins.add(new FlxMouseEventManager());
     }
     
     override public function update(elapsed:Float):Void

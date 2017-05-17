@@ -1,5 +1,6 @@
 package turbo.ecs;
 
+import flixel.FlxSprite;
 import turbo.ecs.components.AbstractComponent;
 import turbo.ecs.components.CameraComponent;
 import turbo.ecs.components.ColourComponent;
@@ -89,14 +90,6 @@ class Entity
     public function has(c:Class<AbstractComponent>):Bool
     {
         return this.get(c) != null;
-    }
-
-    public function onEvent(event:String):Void
-    {
-        for (component in this.components)
-        {
-            component.onEvent(event);
-        }
     }
 
     public function update(elapsedSeconds:Float):Void
@@ -245,10 +238,10 @@ class Entity
         return this;
     }
     
-    public function onClick(callback:Float->Float->Void, isPixelPerfect:Bool = true):Entity
+    public function onClick(callback:FlxSprite->Void, isPixelPerfect:Bool = true):Entity
     {
         var mouseComponent:MouseClickComponent = new MouseClickComponent(isPixelPerfect);
-        mosueComponent.registerCallback(callback)
+        mouseComponent.registerCallback(callback);
         this.add(mouseComponent);
         return this;
     }
@@ -300,7 +293,7 @@ class Entity
         {
             var c = this.get(ColourComponent);
             this.remove(ColourComponent);
-            this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height));   
+            this.add(new ColourComponent(c.red, c.green, c.blue, width, height));   
         }        
 
         if (!this.has(PositionComponent))

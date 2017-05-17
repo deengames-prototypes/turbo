@@ -37,12 +37,6 @@ class TurboState extends FlxState
     {
         super.update(elapsedSeconds);
         container.update(elapsedSeconds);
-
-        for (e in this.entities)
-        {
-            e.update(elapsedSeconds);
-        }
-
         for (collisionCheck in this.collisionChecks)
         {
             var g1 = this.collisionGroups.get(collisionCheck[0]);

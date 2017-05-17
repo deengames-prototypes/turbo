@@ -4,17 +4,17 @@ import flixel.FlxSprite;
 
 class MouseClickComponent extends AbstractComponent
 {
-    public var mouseDownCallback(default, null):Void->Void;
+    public var mouseDownCallback(default, null):FlxSprite->Void;
     public var isPixelPerfect(default, null):Bool;
     
     // internal
     public var sprite:FlxSprite;
     public var isInitialized:Bool = false;
 
-    public function new(isPixelPerfect:Bool, mouseDownCallback:Void->Void)
+    public function new(mouseDownCallback:FlxSprite->Void, isPixelPerfect:Bool)
     {
         super();
-        this.mouseDownCallback = callback;
+        this.mouseDownCallback = mouseDownCallback;
         this.isPixelPerfect = isPixelPerfect;
     }
 }
