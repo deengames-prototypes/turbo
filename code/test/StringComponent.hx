@@ -1,6 +1,6 @@
 package;
 
-import turbo.ecs.component.AbstractComponent;
+import turbo.ecs.components.AbstractComponent;
 
 class StringComponent extends AbstractComponent
 {

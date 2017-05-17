@@ -1,0 +1,13 @@
+{
+    "name": "turbo",
+    "version": "0.1.0",
+    "releasenote": "Initial release",
+
+    "url": "https://github.com/deengames/turbo",
+    "description": "Turbo is a batteries-included extension for HaxeFlixel. It includes an entity-component framework (and pre-built system), and others.",
+    "tags": ["cross", "extension", "utility"],
+    "license": "MIT",    
+    "classPath": "code/src",
+    "contributors": ["ashes999"],
+    "dependencies": { "flixel": "4.2.1", "noor": "0.2.0" }
+}

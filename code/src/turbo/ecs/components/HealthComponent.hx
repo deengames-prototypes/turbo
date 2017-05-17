@@ -1,6 +1,6 @@
-package turbo.ecs.component;
+package turbo.ecs.components;
 
-import turbo.ecs.component.AbstractComponent;
+import turbo.ecs.components.AbstractComponent;
 import noor.Exception;
 
 /**

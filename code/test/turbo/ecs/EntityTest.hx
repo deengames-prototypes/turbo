@@ -1,14 +1,14 @@
 package turbo.ecs;
 
 using massive.munit.Assert;
-import turbo.ecs.component.AbstractComponent;
-import turbo.ecs.component.CameraComponent;
-import turbo.ecs.component.ColourComponent;
-import turbo.ecs.component.ImageComponent;
-import turbo.ecs.component.KeyboardInputComponent;
-import turbo.ecs.component.MouseClickComponent;
-import turbo.ecs.component.PositionComponent;
-import turbo.ecs.component.SpriteComponent;
+import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.components.CameraComponent;
+import turbo.ecs.components.ColourComponent;
+import turbo.ecs.components.ImageComponent;
+import turbo.ecs.components.KeyboardInputComponent;
+import turbo.ecs.components.MouseClickComponent;
+import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.SpriteComponent;
 import turbo.ecs.Container;
 import turbo.ecs.Entity;
 

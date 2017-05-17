@@ -1,4 +1,4 @@
-package turbo.ecs.component;
+package turbo.ecs.components;
 
 import flixel.FlxSprite;
 

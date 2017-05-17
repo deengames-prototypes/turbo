@@ -1,13 +1,14 @@
 package turbo.ecs;
 
-import turbo.ecs.component.AbstractComponent;
-import turbo.ecs.component.CameraComponent;
-import turbo.ecs.component.ColourComponent;
-import turbo.ecs.component.KeyboardInputComponent;
-import turbo.ecs.component.HealthComponent;
-import turbo.ecs.component.ImageComponent;
-import turbo.ecs.component.MouseClickComponent;
-import turbo.ecs.component.PositionComponent;
+import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.components.CameraComponent;
+import turbo.ecs.components.ColourComponent;
+import turbo.ecs.components.KeyboardInputComponent;
+import turbo.ecs.components.HealthComponent;
+import turbo.ecs.components.ImageComponent;
+import turbo.ecs.components.MouseClickComponent;
+import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.TextComponent;
 import turbo.ecs.Container;
 
 class Entity
@@ -19,6 +20,9 @@ class Entity
     // and use that to determinte collisions. Erm, we have to reprocess
     // the entity if its tags change.
     private var tags(default, null):Array<String>;
+
+    // Arbitrary key/value pairs
+    private var data = new Map<String, Any>();
 
     private var everyFrame:Void->Void;
     // Seconds from now => event to call
@@ -162,17 +166,17 @@ class Entity
     {
         if (!this.has(ColourComponent))
         {
-            this.add(new ColourComponent(red, green, blue, 32, 32, this)); // default size
+            this.add(new ColourComponent(red, green, blue, 32, 32)); // default size
         }
         else
         {        
             var c = this.get(ColourComponent);
-            this.add(new ColourComponent(red, green, blue, c.width, c.height, this));
+            this.add(new ColourComponent(red, green, blue, c.width, c.height));
         }
 
         if (!this.has(PositionComponent))
         {
-            this.add(new PositionComponent(0, 0, this));
+            this.add(new PositionComponent(0, 0));
         }
 
         return this;
@@ -180,7 +184,7 @@ class Entity
     
     public function health(maximumHealth:Int):Entity
     {
-        this.add(new HealthComponent(maximumHealth, this));
+        this.add(new HealthComponent(maximumHealth));
         return this;
     }
 
@@ -202,7 +206,7 @@ class Entity
     
     public function image(image:String, repeat:Bool = false):Entity
     {
-        this.add(new ImageComponent(image, repeat, this));
+        this.add(new ImageComponent(image, repeat));
         if (!this.has(PositionComponent))
         {
             this.move(0, 0);
@@ -227,7 +231,7 @@ class Entity
     
     public function move(x:Float, y:Float):Entity
     {
-        this.add(new PositionComponent(x, y, this));
+        this.add(new PositionComponent(x, y));
         // Make things move immediately, even if we didn't add the entity
         // to the current state.
         this.update(0);
@@ -237,7 +241,7 @@ class Entity
     // MoveSpeed is in pixels per second
     public function moveWithKeyboard(moveSpeed:Int):Entity
     {
-        this.add(new KeyboardInputComponent(moveSpeed, this));
+        this.add(new KeyboardInputComponent(moveSpeed));
         return this;
     }
     
@@ -289,7 +293,7 @@ class Entity
     {
         if (!this.has(ColourComponent))
         {
-            this.add(new ColourComponent(255, 0, 0, width, height, this)); // default colour
+            this.add(new ColourComponent(255, 0, 0, width, height)); // default colour
         }
         else
         {
@@ -302,12 +306,12 @@ class Entity
                 ColourComponent.onRemove(c);
             }
             
-            this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height, this));   
+            this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height));   
         }        
 
         if (!this.has(PositionComponent))
         {
-            this.add(new PositionComponent(0, 0, this));
+            this.add(new PositionComponent(0, 0));
         }
 
         return this;
@@ -315,7 +319,7 @@ class Entity
 
     public function text(message:String, fontSize:Int = 36):Entity
     {
-        this.add(new TextComponent(message, fontSize, this));
+        this.add(new TextComponent(message, fontSize));
         return this;
     }
 
@@ -327,9 +331,21 @@ class Entity
 
     public function velocity(vx:Float, vy:Float):Entity
     {
-        this.add(new VelocityComponent(vx, vy, this));
+        this.add(new VelocityComponent(vx, vy));
         return this;
     }
     
     /////////////////////// End fluent API ///////////////////////
+}
+
+private class AfterEvent
+{
+    public var seconds(default, default):Float;
+    public var callback(default, null):Void->Void;
+
+    public function new(seconds:Float, callback:Void->Void)
+    {
+        this.seconds = seconds;
+        this.callback = callback;
+    }
 }

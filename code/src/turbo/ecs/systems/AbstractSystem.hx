@@ -1,6 +1,6 @@
-package turbo.ecs.system;
+package turbo.ecs.systems;
 
-import turbo.ecs.component.AbstractComponent;
+import turbo.ecs.components.AbstractComponent;
 
 // Base class, don't use directly.
 class AbstractSystem

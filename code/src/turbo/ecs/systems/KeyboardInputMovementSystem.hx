@@ -1,4 +1,4 @@
-package turbo.ecs.system;
+package turbo.ecs.systems;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -7,9 +7,9 @@ import flixel.input.FlxInput.FlxInputState;
 import flixel.input.keyboard.FlxKey;
 
 import turbo.ecs.Entity;
-import turbo.ecs.component.AbstractComponent;
-import turbo.ecs.component.KeyboardInputComponent;
-import turbo.ecs.component.PositionComponent;
+import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.components.KeyboardInputComponent;
+import turbo.ecs.components.PositionComponent;
 
 // Looks for KeyboardInputComponents and moves their SpriteComponents to arrow keys or WASD
 class KeyboardInputMovementSystem extends AbstractSystem

@@ -3,7 +3,7 @@ package turbo.ecs;
 using massive.munit.Assert;
 import turbo.ecs.Container;
 import turbo.ecs.Entity;
-import turbo.ecs.system.AbstractSystem;
+import turbo.ecs.systems.AbstractSystem;
 
 class ContainerTest
 {

@@ -1,20 +1,20 @@
-package turbo.ecs.system;
+package turbo.ecs.systems;
 
-import turbo.ecs.component.AbstractComponent;
-import turbo.ecs.component.PositionComponent;
-import turbo.ecs.component.ImageComponent;
+import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.ImageComponent;
 import turbo.ecs.Entity;
+import turbo.ecs.TurboState;
 
 import flixel.FlxSprite;
-import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
 
 // Looks for and initializes ImageComponent instances
 class DrawImageSystem extends AbstractSystem
 {
-    private var state:FlxState;
+    private var state:TurboState;
     
-    public function new(state:FlxState)
+    public function new(state:TurboState)
     {
         super([ImageComponent, PositionComponent]);
         this.state = state;

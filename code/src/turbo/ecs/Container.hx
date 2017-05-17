@@ -1,13 +1,13 @@
 package turbo.ecs;
 
-import flixel.FlxState;
-import turbo.ecs.component.AbstractComponent;
-import turbo.ecs.system.AbstractSystem;
-import turbo.ecs.system.DrawColourSystem;
-import turbo.ecs.system.DrawImageSystem;
-import turbo.ecs.system.KeyboardInputMovementSystem;
-import turbo.ecs.system.FollowCameraSystem;
-import turbo.ecs.system.MouseClickSystem;
+import turbo.ecs.TurboState;
+import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.systems.AbstractSystem;
+import turbo.ecs.systems.DrawColourSystem;
+import turbo.ecs.systems.DrawImageSystem;
+import turbo.ecs.systems.KeyboardInputMovementSystem;
+import turbo.ecs.systems.FollowCameraSystem;
+import turbo.ecs.systems.MouseClickSystem;
 
 // The main class that glues everything together. In Ash, this is called "engine."
 // A collection of components and systems. Use this per screen or whatever.
@@ -57,13 +57,16 @@ class Container
         }
     }
     
-    public function addDefaultSystems(state:FlxState):Void
+    public function addDefaultSystems():Void
     {
+        var state:TurboState = TurboState.currentState;
+
         this.addSystem(new KeyboardInputMovementSystem())
             .addSystem(new FollowCameraSystem())
             .addSystem(new MouseClickSystem())
             // These are always last so we guarantee consistency
             .addSystem(new DrawImageSystem(state))
-            .addSystem(new DrawColourSystem(state));
+            .addSystem(new DrawColourSystem(state))
+            .addSystem(new DrawTextSystem(state));
     }
 }

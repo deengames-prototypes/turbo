@@ -1,19 +1,19 @@
-package turbo.ecs.system;
+package turbo.ecs.systems;
 
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
-import flixel.FlxState;
 
-import turbo.ecs.component.AbstractComponent;
-import turbo.ecs.component.ColourComponent;
-import turbo.ecs.component.PositionComponent;
+import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.components.ColourComponent;
+import turbo.ecs.components.PositionComponent;
 import turbo.ecs.Entity;
+import turbo.ecs.TurboState;
 
 class DrawColourSystem extends AbstractSystem
 {
-    private var state:FlxState;
+    private var state:TurboState;
     
-    public function new(state:FlxState)
+    public function new(state:TurboState)
     {
         super([ColourComponent, PositionComponent]);
         this.state = state;

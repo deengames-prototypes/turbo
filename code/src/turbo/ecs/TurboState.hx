@@ -16,24 +16,27 @@ class TurboState extends FlxState
     public var width(get, null):Int;
     public var height(get, null):Int;
 
-    private var entities = new Array<Entity>();
-
     // FlxGroups for collisions, by tag
     private var collisionGroups = new Map<String, FlxGroup>();
     // Pairs of collisions to check, eg. ["player", "walls"] + ["bullet", "player"]
     private var collisionChecks = new Array<Array<String>>();
+    private var container:Container;
 
     public static var currentState(default, null):TurboState;
 
     override public function create():Void
     {
-        super.create();        
+        super.create();
+        this.container = new Container();
+        container.addDefaultSystems();
+
         TurboState.currentState = this;
     }
 
     override public function update(elapsedSeconds:Float):Void
     {
         super.update(elapsedSeconds);
+        container.update(elapsedSeconds);
 
         for (e in this.entities)
         {
@@ -50,9 +53,10 @@ class TurboState extends FlxState
 
     public function addEntity(e:Entity):Void
     {
-        this.entities.push(e);
+        container.addEntity(e);
 
         // Add one FlxGroup per tag so we can collide groups later
+        // TODO: push into collision system
         for (tag in e.tags)
         {
             if (!this.collisionGroups.exists(tag))
@@ -91,6 +95,7 @@ class TurboState extends FlxState
         return FlxG.stage.stageHeight;
     }
 
+    // TODO: push into collision system
     public function trackCollision(tag1:String, tag2:String):Void
     {
         if (!this.collisionGroups.exists(tag1))

@@ -1,9 +1,9 @@
-package turbo.ecs.system;
+package turbo.ecs.systems;
 
 import flixel.FlxG;
 import flixel.FlxState;
 
-import turbo.ecs.component.MouseClickComponent;
+import turbo.ecs.components.MouseClickComponent;
 import turbo.ecs.Entity;
 
 class MouseClickSystem extends AbstractSystem

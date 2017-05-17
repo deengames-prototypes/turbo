@@ -1,12 +1,12 @@
-package turbo.ecs.system;
+package turbo.ecs.systems;
 
 import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.FlxG;
 
-import turbo.ecs.component.AbstractComponent;
-import turbo.ecs.component.CameraComponent;
-import turbo.ecs.component.SpriteComponent;
+import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.components.CameraComponent;
+import turbo.ecs.components.SpriteComponent;
 import turbo.ecs.Entity;
 
 class FollowCameraSystem extends AbstractSystem
