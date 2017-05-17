@@ -13,6 +13,9 @@ import flixel.addons.display.FlxBackdrop;
 class DrawImageSystem extends AbstractSystem
 {
     private var state:TurboState;
+
+    // The old image name. So we know it changed.
+    private var previousImages = new Map<Entity, String>();
     
     public function new(state:TurboState)
     {
@@ -28,6 +31,12 @@ class DrawImageSystem extends AbstractSystem
             var image:ImageComponent = entity.get(ImageComponent);
             var position:PositionComponent = entity.get(PositionComponent);
 
+            if (image.image != previousImages.get(entity))
+            {
+                // Image changed. Update.
+                image.sprite.loadGraphic(image.image);
+                previousImages.set(entity, image.image);
+            }            
             image.sprite.setPosition(position.x,position.y);
         }
     }
@@ -54,6 +63,7 @@ class DrawImageSystem extends AbstractSystem
             var position:PositionComponent = entity.get(PositionComponent);
             image.sprite.x = position.x;
             image.sprite.y = position.y;
+            previousImages.set(entity, image.image);
         }
     }
 }

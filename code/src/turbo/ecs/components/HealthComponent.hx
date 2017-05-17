@@ -8,7 +8,7 @@ Anything with health. Has current/maximum health.
 */
 class HealthComponent extends AbstractComponent
 {
-    public var currentHealth(default, null):Int = 0;
+    public var currentHealth:Int = 0;
     public var maximumHealth(default, null):Int = 0;
     
     public function new(maximumHealth:Int):Void
