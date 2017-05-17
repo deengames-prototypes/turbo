@@ -186,20 +186,26 @@ class Entity
         var img = this.get(ImageComponent);
         if (img != null)
         {
-            img.sprite.alpha = 0;
+            img.show = false;
         }
 
         var text = this.get(TextComponent);
         if (text != null)
         {
-            text.textField.alpha = 0;
+            text.show = false;
         }
         return this;
     }
     
     public function image(image:String, repeat:Bool = false):Entity
     {
+        if (this.has(ImageComponent))
+        {
+            this.remove(ImageComponent);
+        }
+
         this.add(new ImageComponent(image, repeat));
+        
         if (!this.has(PositionComponent))
         {
             this.move(0, 0);

@@ -8,8 +8,9 @@ class TextComponent extends AbstractComponent
     public var text:String;
     public var fontSize:Int;
 
-    // internal
+    // internals
     public var textField:FlxText;
+    public var show:Bool = true;
 
     public function new(text:String, fontSize:Int)
     {

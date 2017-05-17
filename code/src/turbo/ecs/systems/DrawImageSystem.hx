@@ -37,7 +37,11 @@ class DrawImageSystem extends AbstractSystem
                 image.sprite.loadGraphic(image.image);
                 previousImages.set(entity, image.image);
             }            
+
             image.sprite.setPosition(position.x,position.y);
+            
+            // You can't manipulate alpha yourself, sorry.
+            image.sprite.alpha = image.show == true ? 1 : 0;
         }
     }
     

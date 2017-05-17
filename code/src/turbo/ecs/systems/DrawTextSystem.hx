@@ -28,6 +28,9 @@ class DrawTextSystem extends AbstractSystem
             var position:PositionComponent = entity.get(PositionComponent);
             text.textField.text = text.text;
             text.textField.setPosition(position.x,position.y);
+
+            // You can't manipulate alpha yourself, sorry.
+            text.textField.alpha = text.show == true ? 1 : 0;
         }
     }
     

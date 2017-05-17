@@ -6,8 +6,9 @@ class ImageComponent extends SpriteComponent
 {
     public var image:String = "";
     
-    // internal
+    // internals
     public var isRepeating:Bool;
+    public var show:Bool = true;
 
     public function new(fileName:String,isRepeating:Bool = false)
     {
