@@ -79,14 +79,14 @@ class ContainerTest
     }
 }
 
-class DummySystem extends turbo.ecs.system.AbstractSystem
+class DummySystem extends turbo.ecs.systems.AbstractSystem
 {
     public var lastUpdate(default, null):Float;
     public var whoChanged(default, null):Entity;
     
     public function new()
     {
-        super([turbo.ecs.component.AbstractComponent]);
+        super([turbo.ecs.components.AbstractComponent]);
     }
     
     override public function update(elapsed:Float):Void

@@ -1,13 +1,13 @@
 package turbo.ecs.system;
 
 using massive.munit.Assert;
-import turbo.ecs.component.AbstractComponent;
+import turbo.ecs.components.AbstractComponent;
 import turbo.ecs.Entity;
-import turbo.ecs.system.AbstractSystem;
+import turbo.ecs.systems.AbstractSystem;
 
 // You may find this amusing. It's possible to test base/abstract class code
 // in isolation. Then, subclasses only need to test subclassed code! Awesomeness ensues.
-@:access(turbo.ecs.system.AbstractSystem)
+@:access(turbo.ecs.systems.AbstractSystem)
 class AbstractSystemTest
 {
     @Test

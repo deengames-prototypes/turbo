@@ -1,24 +1,24 @@
 package turbo.ecs.system;
 
-import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxBackdrop;
 
 import IntComponent;
 using massive.munit.Assert;
 
-import turbo.ecs.component.PositionComponent;
-import turbo.ecs.component.ImageComponent;
+import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.ImageComponent;
 import turbo.ecs.Entity;
-import turbo.ecs.system.DrawImageSystem;
+import turbo.ecs.TurboState;
+import turbo.ecs.systems.DrawImageSystem;
 
-@:access(turbo.ecs.system.DrawImageSystem)
+@:access(turbo.ecs.systems.DrawImageSystem)
 class DrawImageSystemTest
 {
     @Test
     public function entitiesNeedAPositionAndImage()
     {
-        var system = new DrawImageSystem(new FlxState());
+        var system = new DrawImageSystem(new TurboState());
         var e = new Entity().add(new StringComponent("testing!")).add(new IntComponent(1));
         system.entityChanged(e);               
         Assert.areEqual(0, system.entities.length);
@@ -32,7 +32,7 @@ class DrawImageSystemTest
     @Test
     public function entityChangedInitializesTheSpritesSprite()
     {
-        var system = new DrawImageSystem(new FlxState());
+        var system = new DrawImageSystem(new TurboState());
         var e = new Entity()
             .add(new PositionComponent(0, 0))
             .add(new ImageComponent("assets/apple.png"));
@@ -43,7 +43,7 @@ class DrawImageSystemTest
     @Test
     public function updateSetsTheSpriteCoordinatesToTheComponentsCoordinates()
     {
-        var system = new DrawImageSystem(new FlxState());
+        var system = new DrawImageSystem(new TurboState());
         var i = new ImageComponent("assets/ball.png");
         var p = new PositionComponent(135, 208);
         var e = new Entity().add(p).add(i);
@@ -67,7 +67,7 @@ class DrawImageSystemTest
     @Test
     public function updateInitializesRepeatingSpriteToFlxBackdrop()
     {
-        var system = new DrawImageSystem(new FlxState());
+        var system = new DrawImageSystem(new TurboState());
         var i = new ImageComponent("assets/ball.png",true);
         var p = new PositionComponent(135, 208);
         var e = new Entity().add(p).add(i);

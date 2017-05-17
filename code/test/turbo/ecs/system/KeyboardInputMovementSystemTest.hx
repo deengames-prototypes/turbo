@@ -3,12 +3,12 @@ package turbo.ecs.system;
 import flixel.input.keyboard.FlxKey;
 import IntComponent;
 using massive.munit.Assert;
-import turbo.ecs.component.PositionComponent;
-import turbo.ecs.component.KeyboardInputComponent;
+import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.KeyboardInputComponent;
 import turbo.ecs.Entity;
-import turbo.ecs.system.KeyboardInputMovementSystem;
+import turbo.ecs.systems.KeyboardInputMovementSystem;
 
-@:access(turbo.ecs.system.KeyboardInputMovementSystem)
+@:access(turbo.ecs.systems.KeyboardInputMovementSystem)
 class KeyboardInputMovementSystemTest
 {
     private var system:TestableKeyboardInputMovementSystem;

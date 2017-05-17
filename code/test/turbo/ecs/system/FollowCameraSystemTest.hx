@@ -5,15 +5,15 @@ import flixel.FlxG;
 import IntComponent;
 import StringComponent;
 using massive.munit.Assert;
-import turbo.ecs.component.ColourComponent;
-import turbo.ecs.component.CameraComponent;
-import turbo.ecs.component.ImageComponent;
-import turbo.ecs.component.PositionComponent;
+import turbo.ecs.components.ColourComponent;
+import turbo.ecs.components.CameraComponent;
+import turbo.ecs.components.ImageComponent;
+import turbo.ecs.components.PositionComponent;
 import turbo.ecs.Entity;
-import turbo.ecs.system.FollowCameraSystem;
+import turbo.ecs.systems.FollowCameraSystem;
 
 
-@:access(turbo.ecs.system.FollowCameraSystem)
+@:access(turbo.ecs.systems.FollowCameraSystem)
 class FollowCameraSystemTest
 {
     @Test

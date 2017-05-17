@@ -1,6 +1,9 @@
 package turbo.ecs;
 
+import flixel.FlxSprite;
+
 using massive.munit.Assert;
+
 import turbo.ecs.components.AbstractComponent;
 import turbo.ecs.components.CameraComponent;
 import turbo.ecs.components.ColourComponent;
@@ -94,16 +97,15 @@ class EntityTest
     @Test
     public function onClickAddsMouseClickComponent()
     {
-        var clickHandler = function(x:Float, y:Float)
+        var clickHandler = function(s:FlxSprite)
         {
-            trace('Clicked on ${x}, ${y}');
+            trace('Clicked on ${s}');
         }
         
         var e = new Entity().onClick(clickHandler);
         Assert.isTrue(e.has(MouseClickComponent));
         var actual = e.get(MouseClickComponent);
-        Assert.areEqual(1, actual.callbacks.length);
-        Assert.areEqual(clickHandler, actual.callbacks[0]);
+        Assert.areEqual(clickHandler, actual.mouseDownCallback);
     }
     
     @Test

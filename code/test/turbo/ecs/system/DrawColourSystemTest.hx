@@ -1,21 +1,23 @@
 package turbo.ecs.system;
 
-import flixel.FlxState;
 import IntComponent;
-using massive.munit.Assert;
-import turbo.ecs.component.PositionComponent;
-import turbo.ecs.component.ColourComponent;
-import turbo.ecs.Entity;
-import turbo.ecs.system.DrawColourSystem;
 import StringComponent;
 
-@:access(turbo.ecs.system.DrawColourSystem)
+using massive.munit.Assert;
+
+import turbo.ecs.Entity;
+import turbo.ecs.TurboState;
+import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.ColourComponent;
+import turbo.ecs.systems.DrawColourSystem;
+
+@:access(turbo.ecs.systems.DrawColourSystem)
 class DrawColourSystemTest
 {
     @Test
     public function entitiesNeedAPositionAndColour()
     {
-        var system = new DrawColourSystem(new FlxState());
+        var system = new DrawColourSystem(new TurboState());
         var e = new Entity().add(new StringComponent("testing!")).add(new IntComponent(1));
         system.entityChanged(e);               
         Assert.areEqual(0, system.entities.length);
@@ -29,7 +31,7 @@ class DrawColourSystemTest
     @Test
     public function entityChangedInitializesTheColoursSprite()
     {
-        var system = new DrawColourSystem(new FlxState());
+        var system = new DrawColourSystem(new TurboState());
         var e = new Entity().add(new PositionComponent(0, 0)).add(new ColourComponent(0, 0, 0, 1, 1));
         system.entityChanged(e);
         Assert.isNotNull(e.get(ColourComponent).sprite);
@@ -38,7 +40,7 @@ class DrawColourSystemTest
     @Test
     public function updateRemakesTheSpriteIfTheComponentColourChanges()
     {
-        var system = new DrawColourSystem(new FlxState());
+        var system = new DrawColourSystem(new TurboState());
         var c = new ColourComponent(0, 0, 0, 32, 32);
         var e = new Entity().add(new PositionComponent(0, 0)).add(c);
         system.entityChanged(e);
@@ -66,7 +68,7 @@ class DrawColourSystemTest
     @Test
     public function updateSetsTheSpriteCoordinatesToTheComponentsCoordinates()
     {
-        var system = new DrawColourSystem(new FlxState());
+        var system = new DrawColourSystem(new TurboState());
         var c = new ColourComponent(0, 0, 0, 32, 32);
         var p = new PositionComponent(17, 29);
         var e = new Entity().add(p).add(c);
