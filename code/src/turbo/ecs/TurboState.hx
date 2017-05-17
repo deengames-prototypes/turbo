@@ -24,13 +24,17 @@ class TurboState extends FlxState
 
     public static var currentState(default, null):TurboState;
 
+    public function new()
+    {
+        super();        
+        TurboState.currentState = this;
+    }
+
     override public function create():Void
     {
         super.create();
         this.container = new Container();
         container.addDefaultSystems();
-
-        TurboState.currentState = this;
     }
 
     override public function update(elapsedSeconds:Float):Void
