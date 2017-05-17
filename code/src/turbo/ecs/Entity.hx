@@ -19,7 +19,7 @@ class Entity
     // Can't write tags because we put entities in a hashmap based on tags, 
     // and use that to determinte collisions. Erm, we have to reprocess
     // the entity if its tags change.
-    private var tags(default, null):Array<String>;
+    public var tags(default, null):Array<String>;
 
     // Arbitrary key/value pairs
     private var data = new Map<String, Any>();
@@ -199,7 +199,7 @@ class Entity
         var text = this.get(TextComponent);
         if (text != null)
         {
-            text.text.alpha = 0;
+            text.textField.alpha = 0;
         }
         return this;
     }
@@ -247,7 +247,8 @@ class Entity
     
     public function onClick(callback:Float->Float->Void, isPixelPerfect:Bool = true):Entity
     {
-        var mouseComponent:MouseClickComponent = new MouseClickComponent(callback, null, isPixelPerfect, this);
+        var mouseComponent:MouseClickComponent = new MouseClickComponent(isPixelPerfect);
+        mosueComponent.registerCallback(callback)
         this.add(mouseComponent);
         return this;
     }
@@ -284,7 +285,7 @@ class Entity
         var text = this.get(TextComponent);
         if (text != null)
         {
-            text.text.alpha = 1;
+            text.textField.alpha = 1;
         }
         return this;
     }
@@ -298,14 +299,7 @@ class Entity
         else
         {
             var c = this.get(ColourComponent);
-            var clr = c.colour;
-            
             this.remove(ColourComponent);
-            if (ColourComponent.onRemove != null)
-            {
-                ColourComponent.onRemove(c);
-            }
-            
             this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height));   
         }        
 
@@ -325,16 +319,10 @@ class Entity
 
     public function trackWithCamera():Entity
     {
-        this.add(new CameraComponent(this));
+        this.add(new CameraComponent());
         return this;
     }
 
-    public function velocity(vx:Float, vy:Float):Entity
-    {
-        this.add(new VelocityComponent(vx, vy));
-        return this;
-    }
-    
     /////////////////////// End fluent API ///////////////////////
 }
 

@@ -14,7 +14,6 @@ class HealthComponent extends AbstractComponent
     public function new(maximumHealth:Int):Void
     {
         super();
-        // TODO: throw if <= 0
         this.currentHealth = maximumHealth;
         this.maximumHealth = maximumHealth;        
     }

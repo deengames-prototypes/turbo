@@ -1,28 +1,20 @@
-
 package turbo.ecs.components;
 
 import flixel.FlxSprite;
 
 class MouseClickComponent extends AbstractComponent
 {
-    public var callbacks:Array<Float->Float->Void>;
+    public var mouseDownCallback(default, null):Void->Void;
+    public var isPixelPerfect(default, null):Bool;
     
     // internal
     public var sprite:FlxSprite;
+    public var isInitialized:Bool = false;
 
-    public function new()
+    public function new(isPixelPerfect:Bool, mouseDownCallback:Void->Void)
     {
         super();
-        callbacks = new Array<Float->Float->Void>();
-    }
-
-    public function registerCallBack(callback:Float->Float->Void)
-    {
-    	callbacks.push(callback);
-    }
-
-    public function removeCallBack(callback:Float->Float->Void)
-    {
-    	callbacks.remove(callback);
+        this.mouseDownCallback = callback;
+        this.isPixelPerfect = isPixelPerfect;
     }
 }

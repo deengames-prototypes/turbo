@@ -43,12 +43,12 @@ class DrawTextSystem extends AbstractSystem
                 this.state.add(text.textField);
             }
 
-            if (text.message != text.textfield.message)
+            if (text.message != text.textField.message)
             {
                 text.textField.text = text.message;
             }
 
-            if (text.fontSize != text.textfield.size)
+            if (text.fontSize != text.textField.size)
             {
                 text.textField.size = text.fontSize;
             }

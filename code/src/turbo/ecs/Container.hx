@@ -5,6 +5,7 @@ import turbo.ecs.components.AbstractComponent;
 import turbo.ecs.systems.AbstractSystem;
 import turbo.ecs.systems.DrawColourSystem;
 import turbo.ecs.systems.DrawImageSystem;
+import turbo.ecs.systems.DrawTextSystem;
 import turbo.ecs.systems.KeyboardInputMovementSystem;
 import turbo.ecs.systems.FollowCameraSystem;
 import turbo.ecs.systems.MouseClickSystem;
