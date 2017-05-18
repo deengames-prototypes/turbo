@@ -14,7 +14,7 @@ import turbo.ecs.systems.MouseClickSystem;
 // A collection of components and systems. Use this per screen or whatever.
 class Container
 {
-    public static var instance(default, null):Container;
+    public static var instance(get, null):Container;
     public var entities:Array<Entity>;
     public var systems:Array<AbstractSystem>;
     
@@ -79,5 +79,15 @@ class Container
             .addSystem(new DrawImageSystem(state))
             .addSystem(new DrawColourSystem(state))
             .addSystem(new DrawTextSystem(state));
+    }
+
+    public static function get_instance():Container
+    {
+        if (Container.instance == null)
+        {
+            new Container(); // sets instance
+        }
+
+        return Container.instance;
     }
 }
