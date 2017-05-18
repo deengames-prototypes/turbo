@@ -200,17 +200,22 @@ class Entity
     
     public function image(image:String, repeat:Bool = false):Entity
     {
+        trace("@@@ start");
         if (this.has(ImageComponent))
         {
             this.remove(ImageComponent);
+            trace("@ remove old");
         }
 
+        trace("Add " + image);
         this.add(new ImageComponent(image, repeat));
         
         if (!this.has(PositionComponent))
         {
+            trace("@ Move to (0, 0)");
             this.move(0, 0);
         }
+        trace("@@@ done");
         return this;
     }
 
@@ -232,9 +237,7 @@ class Entity
     public function move(x:Float, y:Float):Entity
     {
         this.add(new PositionComponent(x, y));
-        // Make things move immediately, even if we didn't add the entity
-        // to the current state.
-        this.update(0);
+        trace('@ m2ove to ${x}, ${y}');
         return this;
     } 
     
