@@ -198,14 +198,18 @@ class Entity
         return this;
     }
     
-    public function image(image:String, repeat:Bool = false):Entity
+    public function image(image:String, isRepeating:Bool = false):Entity
     {
         if (this.has(ImageComponent))
         {
-            this.remove(ImageComponent);
+            var i:ImageComponent = this.get(ImageComponent);
+            i.image = image;
+            i.isRepeating = isRepeating;
         }
-
-        this.add(new ImageComponent(image, repeat));
+        else
+        {
+            this.add(new ImageComponent(image, isRepeating));
+        }
         
         if (!this.has(PositionComponent))
         {

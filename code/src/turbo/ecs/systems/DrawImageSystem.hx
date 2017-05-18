@@ -33,9 +33,11 @@ class DrawImageSystem extends AbstractSystem
 
             if (image.image != previousImages.get(entity))
             {
-                // Image changed. Update.
-                image.sprite.loadGraphic(image.image);
-                previousImages.set(entity, image.image);
+                // Image changed. Force update.
+                this.state.remove(image.sprite);
+                image.sprite = null;
+                this.entityChanged(entity);
+                previousImages.set(entity, image.image);                
             }            
 
             image.sprite.setPosition(position.x,position.y);
@@ -55,7 +57,7 @@ class DrawImageSystem extends AbstractSystem
             {
                 if (image.isRepeating)
                 {
-                    image.sprite = new FlxBackdrop(image.image) ;
+                    image.sprite = new FlxBackdrop(image.image);
                 }
                 else
                 {
@@ -67,7 +69,6 @@ class DrawImageSystem extends AbstractSystem
             var position:PositionComponent = entity.get(PositionComponent);
             image.sprite.x = position.x;
             image.sprite.y = position.y;
-            previousImages.set(entity, image.image);
         }
     }
 }
