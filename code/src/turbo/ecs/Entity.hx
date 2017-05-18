@@ -277,13 +277,13 @@ class Entity
         var img = this.get(ImageComponent);
         if (img != null)
         {
-            img.sprite.alpha = 1;
+            img.show = true;
         }
 
         var text = this.get(TextComponent);
         if (text != null)
         {
-            text.textField.alpha = 1;
+            text.show = true;
         }
         return this;
     }
