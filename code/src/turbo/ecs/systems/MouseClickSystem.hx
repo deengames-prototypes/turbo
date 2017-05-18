@@ -5,13 +5,16 @@ import flixel.input.mouse.FlxMouseEventManager;
 
 import turbo.ecs.components.MouseClickComponent;
 import turbo.ecs.components.SpriteComponent;
+import turbo.ecs.components.TextComponent;
 import turbo.ecs.Entity;
 
 class MouseClickSystem extends AbstractSystem
 {
     public function new()
     {
-        super([MouseClickComponent, SpriteComponent]);
+        // Only MouseClickComponent because it works with sprites or text
+        // This keeps code DRY but we're not sure what entities we have
+        super([MouseClickComponent]);
         FlxG.plugins.add(new FlxMouseEventManager());
     }
     
@@ -23,9 +26,22 @@ class MouseClickSystem extends AbstractSystem
             var mouseClickComponent:MouseClickComponent = entity.get(MouseClickComponent);
             if (!mouseClickComponent.isInitialized)
             {
-                var sprite = entity.get(SpriteComponent);
-                FlxMouseEventManager.add(sprite.sprite, mouseClickComponent.mouseDownCallback, null, null, null, false, true, mouseClickComponent.isPixelPerfect);
-                mouseClickComponent.isInitialized = true;
+                if (entity.has(SpriteComponent))
+                {
+                    var sprite = entity.get(SpriteComponent);
+                    FlxMouseEventManager.add(sprite.sprite, mouseClickComponent.mouseDownCallback, null, null, null, false, true, mouseClickComponent.isPixelPerfect);
+                    mouseClickComponent.isInitialized = true;
+                }
+                else if (entity.has(TextComponent))
+                {
+                    var text = entity.get(TextComponent);
+                    FlxMouseEventManager.add(text.textField, mouseClickComponent.mouseDownCallback, null, null, null, false, true, mouseClickComponent.isPixelPerfect);
+                    mouseClickComponent.isInitialized = true;
+                }
+                else
+                {
+                    trace("Warning: mouse-click component on entity without a sprite or text.");
+                }
             }
         }
     }

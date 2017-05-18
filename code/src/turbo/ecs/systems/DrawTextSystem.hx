@@ -26,7 +26,10 @@ class DrawTextSystem extends AbstractSystem
         {
             var text:TextComponent = entity.get(TextComponent);
             var position:PositionComponent = entity.get(PositionComponent);
+
             text.textField.text = text.text;
+            text.textField.size = text.fontSize;
+            
             text.textField.setPosition(position.x,position.y);
 
             // You can't manipulate alpha yourself, sorry.
@@ -45,20 +48,6 @@ class DrawTextSystem extends AbstractSystem
                 text.textField = new FlxText(text.text, text.fontSize);
                 this.state.add(text.textField);
             }
-
-            if (text.text != text.textField.text)
-            {
-                text.textField.text = text.text;
-            }
-
-            if (text.fontSize != text.textField.size)
-            {
-                text.textField.size = text.fontSize;
-            }
-            
-            var position:PositionComponent = entity.get(PositionComponent);
-            text.textField.x = position.x;
-            text.textField.y = position.y;
         }
     }
 }

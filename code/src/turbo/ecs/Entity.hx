@@ -1,6 +1,7 @@
 package turbo.ecs;
 
 import flixel.FlxSprite;
+import flixel.text.FlxText;
 import turbo.ecs.components.AbstractComponent;
 import turbo.ecs.components.CameraComponent;
 import turbo.ecs.components.ColourComponent;
@@ -308,10 +309,19 @@ class Entity
 
         return this;
     }
-
-    public function text(message:String, fontSize:Int = 36):Entity
+    
+    public function text(text:String, fontSize:Int = 36):Entity
     {
-        this.add(new TextComponent(message, fontSize));
+        if (this.has(TextComponent))
+        {
+            var t:TextComponent = this.get(TextComponent);
+            t.text = text;
+            t.fontSize = fontSize;
+        }
+        else 
+        {
+            this.add(new TextComponent(text, fontSize));
+        }
         return this;
     }
 
