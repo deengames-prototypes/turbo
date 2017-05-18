@@ -22,7 +22,13 @@ class AbstractSystem
     public function create():Void { } 
     
     // (virtual) Called every update loop
-    public function update(elapsed:Float):Void { }
+    public function update(elapsed:Float):Void
+    {
+        for (entity in this.entities)
+        {
+            entity.update(elapsed);
+        }
+    }
     
     // A new entity was added, or an existing entity was changed.
     // Update our entity list accordingly.

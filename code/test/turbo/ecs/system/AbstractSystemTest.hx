@@ -43,6 +43,18 @@ class AbstractSystemTest
         system.entityChanged(e);        
         Assert.areEqual(0, system.entities.length);        
     }
+
+    @Test
+    public function updateCallsUpdateOnAllEntities()
+    {
+        var system = new IntComponentSystem([IntComponent]);
+        var e:TestEntity = new TestEntity();
+        e.add(new StringComponent("testing!"));
+        e.add(new IntComponent(1));
+        system.entityChanged(e);
+        system.update(10);
+        Assert.areEqual(10, e.totalUpdateTime);
+    }
 }
 
 class IntComponentSystem extends AbstractSystem
@@ -50,5 +62,16 @@ class IntComponentSystem extends AbstractSystem
     public function new(types:Array<Class<AbstractComponent>>)
     {
         super(types);
+    }
+}
+
+class TestEntity extends Entity
+{
+    public var totalUpdateTime:Float = 0;
+
+    public function new() { super(); }
+    override public function update(elapsed:Float)
+    {
+        this.totalUpdateTime += elapsed;
     }
 }
