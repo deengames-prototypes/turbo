@@ -32,8 +32,17 @@ class DrawTextSystem extends AbstractSystem
             
             text.textField.setPosition(position.x,position.y);
 
-            // You can't manipulate alpha yourself, sorry.
-            text.textField.alpha = text.show == true ? 1 : 0;
+            if (text.show == true)
+            {
+                text.textField.alpha = 1;
+                text.show = null;
+            }
+            else if (text.show == false)
+            {
+                text.textField.alpha = 0;
+                text.show = null;
+            }
+            // Else if null, do nothing
         }
     }
     

@@ -8,9 +8,11 @@ class ImageComponent extends SpriteComponent
     
     // internals
     public var isRepeating:Bool;
-    public var show:Bool = true;
 
-    public function new(fileName:String,isRepeating:Bool = false)
+    // sets alpha. true to show, false to hide, null to do nothing.
+    public var show:Null<Bool> = null;
+
+    public function new(fileName:String, isRepeating:Bool = false)
     {
         super();
         this.image = fileName;

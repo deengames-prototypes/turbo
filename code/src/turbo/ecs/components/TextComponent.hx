@@ -10,7 +10,8 @@ class TextComponent extends AbstractComponent
 
     // internals
     public var textField:FlxText;
-    public var show:Bool = true;
+    // sets alpha. true to show, false to hide, null to do nothing.
+    public var show:Null<Bool> = null;
 
     public function new(text:String, fontSize:Int)
     {

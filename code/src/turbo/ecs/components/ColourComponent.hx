@@ -9,6 +9,10 @@ class ColourComponent extends SpriteComponent
     public var blue:Int = 0;
     public var width:Int = 0;
     public var height:Int = 0;    
+
+    // internal
+     // sets alpha. true to show, false to hide, null to do nothing.
+    public var show:Null<Bool> = null;
     
     public function new(red:Int, green:Int, blue:Int, width:Int, height:Int)
     {
@@ -18,6 +22,5 @@ class ColourComponent extends SpriteComponent
         this.blue = blue;
         this.width = width;
         this.height = height;
-        // TODO: throw if any of these are negative, or w/h = 0, or if RGB > 255
     }
 }
