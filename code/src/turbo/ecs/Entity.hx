@@ -165,6 +165,8 @@ class Entity
         else
         {        
             var c = this.get(ColourComponent);
+            this.remove(ColourComponent);
+            TurboState.currentState.remove(c.sprite);
             this.add(new ColourComponent(red, green, blue, c.width, c.height));
         }
 
@@ -294,7 +296,7 @@ class Entity
     {
         if (!this.has(ColourComponent))
         {
-            this.add(new ColourComponent(255, 0, 0, width, height)); // default colour
+            this.add(new ColourComponent(255, 255, 255, width, height)); // default colour
         }
         else
         {
