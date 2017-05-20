@@ -10,6 +10,7 @@ import turbo.ecs.components.HealthComponent;
 import turbo.ecs.components.ImageComponent;
 import turbo.ecs.components.MouseClickComponent;
 import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.SpriteComponent;
 import turbo.ecs.components.TextComponent;
 import turbo.ecs.Container;
 
@@ -237,7 +238,20 @@ class Entity
     
     public function move(x:Float, y:Float):Entity
     {
-        this.add(new PositionComponent(x, y));
+        if (!this.has(SpriteComponent) && !this.has(TextComponent))
+        {
+            throw "Can't move something without a sprite/text component!";
+        }
+
+        if (!this.has(PositionComponent))
+        {
+            this.add(new PositionComponent(x, y));
+        } 
+        
+        var p:PositionComponent = this.get(PositionComponent);
+        p.moveToX = x;
+        p.moveToY = y;
+
         return this;
     } 
     

@@ -40,8 +40,6 @@ class DrawColourSystem extends AbstractSystem
                     this.state.add(colour.sprite);
                 }
 
-                colour.sprite.setPosition(position.x,position.y);
-
                 if (colour.show == true)
                 {
                     colour.sprite.alpha = 1;

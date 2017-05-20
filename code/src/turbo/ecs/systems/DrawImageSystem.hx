@@ -38,9 +38,7 @@ class DrawImageSystem extends AbstractSystem
                 image.sprite = null;
                 this.entityChanged(entity);
                 previousImages.set(entity, image.image);                
-            }            
-
-            image.sprite.setPosition(position.x,position.y);
+            }
             
             if (image.show == true)
             {

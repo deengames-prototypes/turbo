@@ -9,6 +9,7 @@ import turbo.ecs.systems.DrawTextSystem;
 import turbo.ecs.systems.KeyboardInputMovementSystem;
 import turbo.ecs.systems.FollowCameraSystem;
 import turbo.ecs.systems.MouseClickSystem;
+import turbo.ecs.systems.MoveSystem;
 
 // The main class that glues everything together. In Ash, this is called "engine."
 // A collection of components and systems. Use this per screen or whatever.
@@ -75,6 +76,7 @@ class Container
         this.addSystem(new KeyboardInputMovementSystem())
             .addSystem(new FollowCameraSystem())
             .addSystem(new MouseClickSystem())
+            .addSystem(new MoveSystem())
             // These are always last so we guarantee consistency
             .addSystem(new DrawImageSystem(state))
             .addSystem(new DrawColourSystem(state))

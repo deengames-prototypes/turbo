@@ -73,11 +73,10 @@ class TurboState extends FlxState
             }
             else
             {
-                throw 'Not sure how to process for collisions; entity has no tags: ${e}';
+                throw 'Not sure how to process for collisions; entity has no tags but no sprite: ${e.tags}';
             }
             if (sprite != null)
             {
-                trace('Hey, an entity with tags: ${tag}');
                 this.collisionGroups.get(tag).add(sprite);
             }
         }

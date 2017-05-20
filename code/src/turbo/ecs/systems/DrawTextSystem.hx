@@ -29,8 +29,6 @@ class DrawTextSystem extends AbstractSystem
 
             text.textField.text = text.text;
             text.textField.size = text.fontSize;
-            
-            text.textField.setPosition(position.x,position.y);
 
             if (text.show == true)
             {
