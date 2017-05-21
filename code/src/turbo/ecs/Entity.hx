@@ -31,18 +31,18 @@ class Entity
     // Seconds from now => event to call
     private var afterEvents = new Array<AfterEvent>();
     
-    public function new(tags:Array<String> = null)
+    public function new(tag:String = null)
     {
         this.container = Container.instance;
         this.components = new Map<String, AbstractComponent>();
 
-        if (tags == null)
+        if (tag == null)
         {
             this.tags = [];
         }
         else
         {
-            this.tags = tags;
+            this.tags = [tag];
         }
     }
     
@@ -249,6 +249,8 @@ class Entity
         } 
         
         var p:PositionComponent = this.get(PositionComponent);
+        p.x = x;
+        p.y = y;
         p.moveToX = x;
         p.moveToY = y;
 
