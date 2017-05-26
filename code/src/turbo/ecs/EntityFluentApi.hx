@@ -241,4 +241,15 @@ class EntityFluentApi
         entity.add(new CameraComponent());
         return entity;
     }
+
+    public static function velocity(entity:Entity, vx:Float, vy:Float):Entity
+    {
+        var sprite = entity.get(SpriteComponent);
+        if (sprite == null)
+        {
+            throw "Can't add velocity without a sprite.";
+        }
+        sprite.sprite.velocity.set(vx, vy);
+        return entity;
+    }
 }

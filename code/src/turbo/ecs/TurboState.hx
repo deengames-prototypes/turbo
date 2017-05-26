@@ -73,7 +73,7 @@ class TurboState extends FlxState
             }
             else
             {
-                throw 'Not sure how to process for collisions; entity has no tags but no sprite: ${e.tags}';
+                throw 'Not sure how to process for collisions; entity has tags but no sprite: ${e.tags}';
             }
             if (sprite != null)
             {
@@ -97,12 +97,12 @@ class TurboState extends FlxState
     {
         if (!this.collisionGroups.exists(tag1))
         {
-            throw 'Cannot collide with non-existent group ${tag1}; please add entities with this tag first. (Or: please add the entity first, then use .collideWith)';
+            this.collisionGroups.set(tag1, new FlxGroup());
         }
 
         if (!this.collisionGroups.exists(tag2))
         {
-            throw 'Cannot collide with non-existent group ${tag2}; please add entities with this tag first. (Or: please add the entity first, then use .collideWith)';
+            this.collisionGroups.set(tag2, new FlxGroup());
         }
 
         // Check for collisions with these two during update()        
