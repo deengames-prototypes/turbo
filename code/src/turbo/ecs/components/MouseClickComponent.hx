@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 
 class MouseClickComponent extends AbstractComponent
 {
+    /////// TODO: make this a bind event
     public var mouseDownCallback(default, null):FlxSprite->Void;
     public var isPixelPerfect(default, null):Bool;
     

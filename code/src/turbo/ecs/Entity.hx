@@ -4,6 +4,7 @@ import turbo.ecs.Container;
 import turbo.ecs.AfterEvent;
 import turbo.ecs.components.AbstractComponent;
 
+/////////// TODO: add bind/trigger methods
 class Entity
 {
     public var container(default, default):Container;

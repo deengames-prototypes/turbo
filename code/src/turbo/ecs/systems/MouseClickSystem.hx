@@ -29,12 +29,14 @@ class MouseClickSystem extends AbstractSystem
                 if (entity.has(SpriteComponent))
                 {
                     var sprite = entity.get(SpriteComponent);
+                    ////// TODO: call trigger, don't bind directly to callback
                     FlxMouseEventManager.add(sprite.sprite, mouseClickComponent.mouseDownCallback, null, null, null, false, true, mouseClickComponent.isPixelPerfect);
                     mouseClickComponent.isInitialized = true;
                 }
                 else if (entity.has(TextComponent))
                 {
                     var text = entity.get(TextComponent);
+                    ////// TODO: call trigger, don't bind directly to callback
                     FlxMouseEventManager.add(text.textField, mouseClickComponent.mouseDownCallback, null, null, null, false, true, mouseClickComponent.isPixelPerfect);
                     mouseClickComponent.isInitialized = true;
                 }
