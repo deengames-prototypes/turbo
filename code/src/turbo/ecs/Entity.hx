@@ -4,7 +4,6 @@ import turbo.ecs.Container;
 import turbo.ecs.AfterEvent;
 import turbo.ecs.components.AbstractComponent;
 
-/////////// TODO: add bind/trigger methods
 class Entity
 {
     public var container(default, default):Container;
@@ -15,13 +14,17 @@ class Entity
     // the entity if its tags change.
     public var tags(default, null):Array<String>;
 
+    // internal: events to trigger on every frame
+    public var everyFrame(default, default):Void->Void;
+    // internal: Seconds from now => event to call
+    public var afterEvents(default, null):Array<AfterEvent> = new Array<AfterEvent>();
+
     // Arbitrary key/value pairs
     private var data = new Map<String, Any>();
 
-    // internal
-    public var everyFrame(default, default):Void->Void;
-    // Seconds from now => event to call
-    public var afterEvents(default, null):Array<AfterEvent> = new Array<AfterEvent>();
+    // Event handlers: key => callback
+    // TODO: if we need multiple handlers, change value to Array<Void->Void>
+    private var eventHandlers = new Map<String, Void->Void>();
     
     public function new(tag:String = null)
     {
@@ -102,6 +105,28 @@ class Entity
         {
             this.everyFrame();
         }
+    }
+
+    // Bind/trigger events
+    public function bind(eventName:String, callback:Void->Void):Entity
+    {
+        if (this.eventHandlers.exists(eventName))
+        {
+            // If you reach this, add an unbind method of some sort too.
+            throw 'Entity already has an event handler for ${eventName}; please support multiple event-handlers!';
+        }
+
+        this.eventHandlers.set(eventName, callback);
+        return this;
+    }
+
+    public function trigger(eventName:String):Entity
+    {
+        if (this.eventHandlers.exists(eventName))
+        {
+            this.eventHandlers.get(eventName)();
+        }
+        return this;
     }
 
     // data: generic key/value pairs
