@@ -63,30 +63,5 @@ class DrawColourSystemTest
         system.update(0);
         var s4 = c.sprite;
         Assert.areNotEqual(s3, s4);
-    }
-    
-    @Test
-    public function updateSetsTheSpriteCoordinatesToTheComponentsCoordinates()
-    {
-        var system = new DrawColourSystem(new TurboState());
-        var c = new ColourComponent(0, 0, 0, 32, 32);
-        var p = new PositionComponent(17, 29);
-        var e = new Entity().add(p).add(c);
-        system.entityChanged(e);
-        system.update(0);
-        
-        var sprite = c.sprite;
-        Assert.areEqual(p.x, sprite.x);
-        Assert.areEqual(p.y, sprite.y);
-        
-        // player moves the entity. Does the colour's sprite move?
-        p.x = 32;
-        p.y = 48;
-        
-        system.update(0);
-        
-        Assert.areEqual(p.x, sprite.x);
-        Assert.areEqual(p.y, sprite.y);
-    }
-    
+    }    
 }

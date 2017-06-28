@@ -39,30 +39,6 @@ class DrawImageSystemTest
         system.entityChanged(e);
         Assert.isNotNull(e.get(ImageComponent).sprite);
     }
-    
-    @Test
-    public function updateSetsTheSpriteCoordinatesToTheComponentsCoordinates()
-    {
-        var system = new DrawImageSystem(new TurboState());
-        var i = new ImageComponent("assets/ball.png");
-        var p = new PositionComponent(135, 208);
-        var e = new Entity().add(p).add(i);
-        system.entityChanged(e);
-        system.update(0);
-        
-        var sprite = i.sprite;
-        Assert.areEqual(p.x, sprite.x);
-        Assert.areEqual(p.y, sprite.y);
-        
-        // player moves the entity. Does the image's sprite move?
-        p.x = 32;
-        p.y = 65;
-        
-        system.update(0);
-        
-        Assert.areEqual(p.x, sprite.x);
-        Assert.areEqual(p.y, sprite.y);
-    }
 
     @Test
     public function updateInitializesRepeatingSpriteToFlxBackdrop()
