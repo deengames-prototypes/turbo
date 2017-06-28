@@ -10,6 +10,7 @@ import turbo.ecs.components.CameraComponent;
 import turbo.ecs.components.ImageComponent;
 import turbo.ecs.components.PositionComponent;
 import turbo.ecs.Entity;
+using turbo.ecs.EntityFluentApi;
 import turbo.ecs.systems.FollowCameraSystem;
 
 

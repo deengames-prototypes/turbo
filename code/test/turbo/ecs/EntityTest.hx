@@ -14,6 +14,7 @@ import turbo.ecs.components.PositionComponent;
 import turbo.ecs.components.SpriteComponent;
 import turbo.ecs.Container;
 import turbo.ecs.Entity;
+using turbo.ecs.EntityFluentApi;
 
 class EntityTest
 {
@@ -68,7 +69,7 @@ class EntityTest
     @Test
     public function moveAddsPositionComponent()
     {
-        var e = new Entity().move(27, 31);
+        var e = new Entity().image("fake.jpg").move(27, 31);
         Assert.isTrue(e.has(PositionComponent));
         var p = e.get(PositionComponent);
         Assert.areEqual(27, p.x);

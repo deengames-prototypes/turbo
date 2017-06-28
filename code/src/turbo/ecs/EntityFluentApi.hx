@@ -39,8 +39,11 @@ class EntityFluentApi
 
         for (myTag in entity.tags)
         {
-            // I don't like this use of singleton-ish states.
-            TurboState.currentState.trackCollision(myTag, tag);
+            // I don't like this use of singleton-ish states. Null in tests.
+            if (TurboState.currentState != null)
+            {
+                TurboState.currentState.trackCollision(myTag, tag);
+            }
         }
         return entity;
     }
@@ -57,7 +60,11 @@ class EntityFluentApi
         {        
             var c = entity.get(ColourComponent);
             entity.remove(ColourComponent);
-            TurboState.currentState.remove(c.sprite);
+            // I don't like this use of singleton-ish states. Null in tests.
+            if (TurboState.currentState != null)
+            {
+                TurboState.currentState.remove(c.sprite);
+            }
             entity.add(new ColourComponent(red, green, blue, c.width, c.height));
         }
 
