@@ -68,3 +68,10 @@ class DrawImageSystem extends AbstractSystem
     }
 }
 ```
+
+# Events
+
+Turbo draws heavy inspiration from CraftyJS, which uses classes for entities (eg. `Monster`) and where developers register callbacks to event handlers to implement custom logic. Below is a list of components and the events that their systems trigger.
+
+## MouseClickComponent
+- `MouseDown`: triggered when the user clicks the mouse (before the user releases the mouse).

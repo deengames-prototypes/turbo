@@ -163,10 +163,11 @@ class EntityFluentApi
         return entity;
     }
     
-    public static function onClick(entity:Entity, callback:FlxSprite->Void, isPixelPerfect:Bool = true):Entity
+    public static function onClick(entity:Entity, callback:Void->Void, isPixelPerfect:Bool = true):Entity
     {
-        var mc:MouseClickComponent = new MouseClickComponent(callback, isPixelPerfect);
+        var mc:MouseClickComponent = new MouseClickComponent(isPixelPerfect);
         entity.add(mc);
+        entity.bind("MouseDown", callback);
         return entity;
     }
 
