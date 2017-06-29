@@ -173,7 +173,7 @@ class EntityFluentApi
 
     public static function onEveryFrame(entity:Entity, callback:Void->Void):Entity
     {
-        entity.everyFrame = callback;
+        entity.bind("Tick", callback);
         return entity;
     }
     

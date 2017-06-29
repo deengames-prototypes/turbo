@@ -14,8 +14,6 @@ class Entity
     // the entity if its tags change.
     public var tags(default, null):Array<String>;
 
-    // internal: events to trigger on every frame
-    public var everyFrame(default, default):Void->Void;
     // internal: Seconds from now => event to call
     public var afterEvents(default, null):Array<AfterEvent> = new Array<AfterEvent>();
 
@@ -101,10 +99,7 @@ class Entity
             }
         }
 
-        if (this.everyFrame != null)
-        {
-            this.everyFrame();
-        }
+        this.trigger("Tick");
     }
 
     // Bind/trigger events
