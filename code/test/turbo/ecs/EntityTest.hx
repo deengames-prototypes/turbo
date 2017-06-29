@@ -163,4 +163,16 @@ class EntityTest
         Assert.areEqual(24, actual.green);
         Assert.areEqual(79, actual.blue);
     }
+
+    @Test
+    public function triggerTriggersBoundEvents()
+    {
+        var e = new Entity();
+        var timesCalled = 0;
+
+        e.bind("Invoke", function() { timesCalled++; });
+        e.trigger("Invoke");
+        e.trigger("Oranges");
+        Assert.areEqual(1, timesCalled);
+    }
 }
