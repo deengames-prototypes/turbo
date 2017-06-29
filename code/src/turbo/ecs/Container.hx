@@ -7,6 +7,7 @@ import turbo.ecs.systems.DrawColourSystem;
 import turbo.ecs.systems.DrawImageSystem;
 import turbo.ecs.systems.DrawTextSystem;
 import turbo.ecs.systems.KeyboardInputMovementSystem;
+import turbo.ecs.systems.KeyboardInputSystem;
 import turbo.ecs.systems.FollowCameraSystem;
 import turbo.ecs.systems.MouseClickSystem;
 import turbo.ecs.systems.MoveSystem;
@@ -74,6 +75,7 @@ class Container
         var state:TurboState = TurboState.currentState;
 
         this.addSystem(new KeyboardInputMovementSystem())
+            .addSystem(new KeyboardInputSystem())
             .addSystem(new FollowCameraSystem())
             .addSystem(new MouseClickSystem())
             .addSystem(new MoveSystem())
