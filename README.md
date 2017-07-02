@@ -13,22 +13,12 @@ Ash is also a framework; Turbo includes a set of systems for writing HaxeFlixel 
 Small example of a state with a orange square that responds to keyboard movement:
 
 ```
-class PlayState extends FlxState
+class PlayState extends TurboState
 {
-	private var container:Container = new Container();
-    
 	override public function create():Void
 	{
 		super.create();
-        container.addDefaultSystems(this);
-        
-        container.add(new Entity(container).colourC(255, 128, 0).size(48, 48).moveWithKeyboard(100);
-	}
-
-	override public function update(elapsed:Float):Void
-	{
-		super.update(elapsed);
-        this.container.update(elapsed);
+    new Entity().colour(255, 128, 0).size(48, 48).moveWithKeyboard(100);
 	}
 }
 ```
@@ -40,11 +30,10 @@ class DrawImageSystem extends AbstractSystem
 {
     private var state:FlxState;
     
-    public function new(container:Container, state:FlxState)
+    public function new()
     {
         // Get all entities that have both an image and a position
-        super(container, [ImageComponent, PositionComponent]);
-        this.state = state;
+        super([ImageComponent, PositionComponent]);
     }
     
     override public function update(elapsed:Float):Void
