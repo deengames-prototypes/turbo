@@ -52,7 +52,7 @@ class DrawTextSystem extends AbstractSystem
             var text:TextComponent = entity.get(TextComponent);          
             if (text.textField == null)
             {
-                text.textField = new FlxText(text.text, text.fontSize);
+                text.textField = new FlxText(0, 0, 0, text.text, text.fontSize);
                 this.state.add(text.textField);
             }
         }
