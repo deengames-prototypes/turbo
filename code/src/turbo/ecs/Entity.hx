@@ -37,6 +37,11 @@ class Entity
         {
             this.tags = [tag];
         }
+        
+        if (TurboState.currentState != null)
+        {
+          TurboState.currentState.addEntity(this);
+        }
     }
     
     // You can only have one of each component by type
