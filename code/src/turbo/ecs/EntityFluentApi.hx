@@ -36,12 +36,16 @@ class EntityFluentApi
 
     // Delegates to HaxeFlixel for collision resolution; both objects move.
     // If you want one to be static, call .immovable() on it.
-    public static function collideWith(entity:Entity, myTag:String, tag:String):Entity
+    public static function collideWith(entity:Entity, tag:String):Entity
     {
+        if (entity.tag == null || entity.tag == "")
+        {
+            throw 'Entities without a tag cant collide; please add one to ${entity} (target is ${tag}).';
+        }
         var collision:CollisionComponent;
         if (!entity.has(CollisionComponent))
         {
-            collision = new CollisionComponent(myTag, [tag]);
+            collision = new CollisionComponent([tag]);
             entity.add(collision);
         }
 
@@ -58,7 +62,9 @@ class EntityFluentApi
                     break;
                 }
             }
-            collisionSystem.trackCollision(myTag, tag);
+
+            trace('Trakcing ${entity.tag} vs. ${tag}');
+            collisionSystem.trackCollision(entity.tag, tag);
         }
         return entity;
     }
@@ -136,11 +142,11 @@ class EntityFluentApi
     }
 
     // Don't move when resolving collisions
-    public static function immovable(entity:Entity, myTag:String):Entity
+    public static function immovable(entity:Entity):Entity
     {
         if (!entity.has(CollisionComponent))
         {
-            entity.add(new CollisionComponent(myTag, [], true));
+            entity.add(new CollisionComponent([], true));
         }
         return entity;
     }

@@ -9,6 +9,7 @@ import turbo.ecs.components.PositionComponent;
 class Entity
 {
     public var container(default, default):Container;
+    public var tag(default, null):String;
 
     // Convenience methods
     public var x(get, null):Float;
@@ -32,13 +33,15 @@ class Entity
     // TODO: if we need multiple handlers, change value to Array<Void->Void>
     private var eventHandlers = new Map<String, Void->Void>();
     
-    public function new()
+    public function new(tag:String)
     {
         Entity.nextId++;
         this.id = Entity.nextId;
 
         this.container = Container.instance;
         this.components = new Map<String, AbstractComponent>();
+
+        this.tag = tag;
 
         // Can't auto-add entity to state because that makes collision
         // initialization really screwy (sprites are not initialized yet).

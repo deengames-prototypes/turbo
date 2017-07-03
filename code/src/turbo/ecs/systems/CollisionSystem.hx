@@ -96,9 +96,8 @@ class CollisionSystem extends AbstractSystem
 
     private function setupCollisionFor(entity:Entity):Void
     {
-        var cc = entity.get(CollisionComponent);
-    // Add one FlxGroup per tag so we can collide groups later
-        var tag = cc.myTag;
+        // Add one FlxGroup per tag so we can collide groups later
+        var tag = entity.tag;
         if (!this.collisionGroups.exists(tag))
         {
             this.collisionGroups.set(tag, new FlxGroup());
