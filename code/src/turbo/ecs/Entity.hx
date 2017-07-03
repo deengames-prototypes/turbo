@@ -3,10 +3,16 @@ package turbo.ecs;
 import turbo.ecs.Container;
 import turbo.ecs.AfterEvent;
 import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.components.SpriteComponent;
 
 class Entity
 {
     public var container(default, default):Container;
+
+    // Convenience methods
+    public var width(get, null):Int;
+    public var height(get, null):Int;
+
     private var components:Map<String, AbstractComponent>; // Can change AbstractComponent to Any
 
     // Can't write tags because we put entities in a hashmap based on tags, 
@@ -137,5 +143,17 @@ class Entity
     public function setData(key:String, data:Any):Void
     {
         this.data.set(key, data);
+    }
+
+    // convenience methods
+
+    public function get_width():Int
+    {
+        return Std.int(this.get(SpriteComponent).sprite.width);
+    }
+
+    public function get_height():Int
+    {
+        return Std.int(this.get(SpriteComponent).sprite.height);
     }
 }
