@@ -38,10 +38,8 @@ class Entity
             this.tags = [tag];
         }
         
-        if (TurboState.currentState != null)
-        {
-          TurboState.currentState.addEntity(this);
-        }
+        // Can't auto-add entity to state because that makes collision
+        // initialization really screwy (sprites are not initialized yet).
     }
     
     // You can only have one of each component by type

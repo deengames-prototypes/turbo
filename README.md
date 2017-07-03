@@ -18,7 +18,7 @@ class PlayState extends TurboState
 	override public function create():Void
 	{
 		super.create();
-    new Entity().colour(255, 128, 0).size(48, 48).moveWithKeyboard(100);
+        this.addEntity(new Entity().colour(255, 128, 0).size(48, 48).moveWithKeyboard(100));
 	}
 }
 ```

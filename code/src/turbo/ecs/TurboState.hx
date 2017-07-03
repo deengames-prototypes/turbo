@@ -15,11 +15,6 @@ class TurboState extends FlxState
 {
     public var width(get, null):Int;
     public var height(get, null):Int;
-
-    // FlxGroups for collisions, by tag
-    private var collisionGroups = new Map<String, FlxGroup>();
-    // Pairs of collisions to check, eg. ["player", "walls"] + ["bullet", "player"]
-    private var collisionChecks = new Array<Array<String>>();
     private var container:Container;
 
     public static var currentState(default, null):TurboState;
@@ -41,45 +36,11 @@ class TurboState extends FlxState
     {
         super.update(elapsedSeconds);
         container.update(elapsedSeconds);
-        for (collisionCheck in this.collisionChecks)
-        {
-            var g1 = this.collisionGroups.get(collisionCheck[0]);
-            var g2 = this.collisionGroups.get(collisionCheck[1]);
-            var rVal = FlxG.collide(g1, g2);
-        }
     }
 
     public function addEntity(e:Entity):Void
     {
         container.addEntity(e);
-
-        // Add one FlxGroup per tag so we can collide groups later
-        // TODO: push into collision system
-        for (tag in e.tags)
-        {
-            if (!this.collisionGroups.exists(tag))
-            {
-                this.collisionGroups.set(tag, new FlxGroup());
-            }
-
-            var sprite:FlxSprite = null;
-            if (e.has(ColourComponent))
-            {
-                sprite = e.get(ColourComponent).sprite;
-            }
-            else if (e.has(ImageComponent))
-            {
-                sprite = e.get(ImageComponent).sprite;
-            }
-            else
-            {
-                throw 'Not sure how to process for collisions; entity has tags but no sprite: ${e.tags}';
-            }
-            if (sprite != null)
-            {
-                this.collisionGroups.get(tag).add(sprite);
-            }
-        }
     }
 
     public function get_width():Int
@@ -90,22 +51,5 @@ class TurboState extends FlxState
     public function get_height():Int
     {
         return FlxG.stage.stageHeight;
-    }
-
-    // TODO: push into collision system
-    public function trackCollision(tag1:String, tag2:String):Void
-    {
-        if (!this.collisionGroups.exists(tag1))
-        {
-            this.collisionGroups.set(tag1, new FlxGroup());
-        }
-
-        if (!this.collisionGroups.exists(tag2))
-        {
-            this.collisionGroups.set(tag2, new FlxGroup());
-        }
-
-        // Check for collisions with these two during update()        
-        this.collisionChecks.push([tag1, tag2]);
     }
 }

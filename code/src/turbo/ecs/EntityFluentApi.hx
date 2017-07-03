@@ -12,6 +12,9 @@ import turbo.ecs.components.MouseClickComponent;
 import turbo.ecs.components.PositionComponent;
 import turbo.ecs.components.SpriteComponent;
 import turbo.ecs.components.TextComponent;
+import turbo.ecs.components.VelocityComponent;
+
+import turbo.ecs.systems.CollisionSetupSystem;
 
 // "Fluent" extensions on the Entity class
 class EntityFluentApi
@@ -30,19 +33,31 @@ class EntityFluentApi
         return entity;
     }
 
+    // Delegates to HaxeFlixel for collision resolution; both objects move.
+    // If you want one to be static, call .immovable() on it.
     public static function collideWith(entity:Entity, tag:String):Entity
     {
         if (entity.tags == null || entity.tags.length == 0)
         {
-            throw 'Cannot collide an entity (${entity}) without tags!';
+            throw 'Cannot collide an entity without tags! (Target tag: ${tag})';
         }
 
         for (myTag in entity.tags)
         {
             // I don't like this use of singleton-ish states. Null in tests.
-            if (TurboState.currentState != null)
+            if (Container.instance != null)
             {
-                TurboState.currentState.trackCollision(myTag, tag);
+                // Find the collision system
+                var collisionSystem:CollisionSetupSystem = null;
+                for (system in Container.instance.systems)
+                {
+                    if (Std.is(system, CollisionSetupSystem))
+                    {
+                        collisionSystem = cast system;
+                        break;
+                    }
+                }
+                collisionSystem.trackCollision(myTag, tag);
             }
         }
         return entity;
@@ -160,6 +175,10 @@ class EntityFluentApi
     public static function moveWithKeyboard(entity:Entity, moveSpeed:Int):Entity
     {
         entity.add(new KeyboardInputComponent(moveSpeed));
+        if (!entity.has(VelocityComponent))
+        {
+            entity.add(new VelocityComponent(0, 0));
+        }
         return entity;
     }
     
