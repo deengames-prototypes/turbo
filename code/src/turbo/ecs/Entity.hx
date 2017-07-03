@@ -4,12 +4,15 @@ import turbo.ecs.Container;
 import turbo.ecs.AfterEvent;
 import turbo.ecs.components.AbstractComponent;
 import turbo.ecs.components.SpriteComponent;
+import turbo.ecs.components.PositionComponent;
 
 class Entity
 {
     public var container(default, default):Container;
 
     // Convenience methods
+    public var x(get, null):Float;
+    public var y(get, null):Float;
     public var width(get, null):Int;
     public var height(get, null):Int;
 
@@ -146,6 +149,16 @@ class Entity
     }
 
     // convenience methods
+
+    public function get_x():Float
+    {
+        return this.get(PositionComponent).x;
+    }
+
+    public function get_y():Float
+    {
+        return this.get(PositionComponent).y;
+    }
 
     public function get_width():Int
     {
