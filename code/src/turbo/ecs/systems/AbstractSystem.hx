@@ -42,6 +42,7 @@ class AbstractSystem
             {
                 // Track it
                 this.entities.push(entity);
+                this.entityAdded(entity);
             }
         }
         else
@@ -50,6 +51,7 @@ class AbstractSystem
             if (this.entities.indexOf(entity) > -1)
             {
                 this.entities.remove(entity);
+                this.entityRemoved(entity);
             }
         }
     }
@@ -58,6 +60,11 @@ class AbstractSystem
     {
         this.entities.remove(entity);
     }
+
+    // virtual; override
+    public function entityAdded(entity:Entity):Void { }
+    // virtual; override
+    public function entityRemoved(entity:Entity):Void { }
     
     private function doesHaveAllRequiredComponentTypes(entity:Entity):Bool
     {

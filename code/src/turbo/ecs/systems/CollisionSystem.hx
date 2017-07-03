@@ -26,15 +26,11 @@ class CollisionSystem extends AbstractSystem
         super([CollisionComponent, SpriteComponent]);
     }
     
-    override public function entityChanged(entity:Entity):Void
+    override public function entityAdded(entity:Entity):Void
     {
-        if (entity.has(CollisionComponent) && entity.has(SpriteComponent) && this.entities.indexOf(entity) == -1)
-        {
-            trace('Setup for ${entity}');
-            this.setupCollisionFor(entity);
-        }
-
-        super.entityChanged(entity);        
+        super.entityAdded(entity);
+        trace('Setup for ${entity}');
+        this.setupCollisionFor(entity);
     }
 
     override public function update(elapsedSeconds:Float):Void
