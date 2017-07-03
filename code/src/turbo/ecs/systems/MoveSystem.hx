@@ -1,17 +1,15 @@
 package turbo.ecs.systems;
 
-import turbo.ecs.components.AbstractComponent;
 import turbo.ecs.components.PositionComponent;
 import turbo.ecs.components.SpriteComponent;
 import turbo.ecs.components.TextComponent;
 import turbo.ecs.Entity;
 
 import flixel.FlxSprite;
-import flixel.addons.display.FlxBackdrop;
 
 // Moves stuff to entity.move(x, y). Does NOT apply velocity.
 // Velocity works differently (see: KeyboardInputMovementSystem).
-// Also, doesn't deal with collisions; see: CollisionSystem
+// Also, doesn't deal with collisions; see: velocity / CollisionSetupSystem
 class MoveSystem extends AbstractSystem
 {
     public function new()

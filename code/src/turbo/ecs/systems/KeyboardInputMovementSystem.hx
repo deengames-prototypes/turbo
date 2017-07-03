@@ -67,15 +67,7 @@ class KeyboardInputSystem extends AbstractSystem
                 velocityComponent.set("Movement", 0, 0);
             }
 
-            var finalVelocity = velocityComponent.getVelocity();
-            sprite.sprite.velocity.x = finalVelocity.x;
-            sprite.sprite.velocity.y = finalVelocity.y;
-
-            // We know this sprite has velocity, and that velocity determines position.
-            // In this case, synch back from the sprite to the position component.
-            var position = entity.get(PositionComponent);
-            position.x = sprite.sprite.x;
-            position.y = sprite.sprite.y;
+            // Velocity is applied in the VelocitySystem
         }
     }
     

@@ -271,12 +271,7 @@ class EntityFluentApi
 
     public static function velocity(entity:Entity, vx:Float, vy:Float):Entity
     {
-        var sprite = entity.get(SpriteComponent);
-        if (sprite == null)
-        {
-            throw "Can't add velocity without a sprite.";
-        }
-        sprite.sprite.velocity.set(vx, vy);
+        entity.add(new VelocityComponent(vx, vy));
         return entity;
     }
 }
