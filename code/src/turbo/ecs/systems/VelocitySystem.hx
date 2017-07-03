@@ -23,9 +23,9 @@ class VelocitySystem extends AbstractSystem
             var velocityComponent = entity.get(VelocityComponent);
             var sprite = entity.get(SpriteComponent);
 
-            var finalVelocity = velocityComponent.getVelocity();
-            sprite.sprite.velocity.x = finalVelocity.x;
-            sprite.sprite.velocity.y = finalVelocity.y;
+            var aggregateVelocity = velocityComponent.velocity;
+            sprite.sprite.velocity.x = aggregateVelocity.x;
+            sprite.sprite.velocity.y = aggregateVelocity.y;
 
             // We know this sprite has velocity, and that velocity determines position.
             // In this case, synch back from the sprite to the position component.

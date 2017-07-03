@@ -8,27 +8,26 @@ class VelocityComponent extends AbstractComponent
     // speed (velocity), plus it responds to keyboard events (adds velocity).
     // Velocity is key to collision detection and resolution!!!
     private var velocities = new Map<String, FlxPoint>();
+    public var velocity(default, null):FlxPoint = new FlxPoint();
 
     public function new(vx:Float, vy:Float)
     {
         super();
-        this.velocities.set("Base Velocity", new FlxPoint(vx, vy));
+        this.set("Base Velocity", vx, vy);
     }
 
     public function set(name:String, vx:Float, vy:Float):Void
     {
         this.velocities.set(name, new FlxPoint(vx, vy));
-    }
+        
+        // Recalculate final velocity
+        this.velocity.x = 0;
+        this.velocity.y = 0;
 
-    public function getVelocity():FlxPoint
-    {
-        var toReturn = new FlxPoint();
         for (v in this.velocities)
         {
-            toReturn.x += v.x;
-            toReturn.y += v.y;
+            this.velocity.x += v.x;
+            this.velocity.y += v.y;
         }
-        trace(toReturn);
-        return toReturn;
     }
 }
