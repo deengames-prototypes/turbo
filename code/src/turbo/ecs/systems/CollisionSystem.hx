@@ -3,13 +3,14 @@ package turbo.ecs.systems;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
+import turbo.ecs.components.CollisionComponent;
 import turbo.ecs.components.ColourComponent;
 import turbo.ecs.components.ImageComponent;
 import turbo.ecs.Entity;
 
-// Sets up tags and such for collisions. Doesn't do any actual resolution.
-// That part, HaxeFlixel handles.
-class CollisionSetupSystem extends AbstractSystem
+// Sets up tags and such for collisions. Delegates actual resolution to HaxeFlixel.
+// On update, calls FlxG.collide, which resolves collisions.
+class CollisionSystem extends AbstractSystem
 {
     // Entities to process later; they don't have an initialized sprite yet
     private var entitiesToProcess = new Array<Entity>();
@@ -43,13 +44,35 @@ class CollisionSetupSystem extends AbstractSystem
             this.setupCollisionFor(e);
         }
 
+        // If sprites change, make sure immovable entities are still immovable
+        for (e in this.entities)
+        {
+            var cc = e.get(CollisionComponent);
+
+            if (cc != null)
+            {
+                if (e.has(ColourComponent))
+                {
+                    e.get(ColourComponent).sprite.immovable = cc.immovable;
+                }
+                else if (e.has(ImageComponent))
+                {
+                    e.get(ImageComponent).sprite.immovable = cc.immovable;
+                }
+                else
+                {
+                    throw 'Cant make ${e} immovable; it has no sprite yet.';
+                }
+            }
+        }
+
         super.update(elapsedSeconds);
         for (collisionCheck in this.collisionChecks)
         {
             var g1 = this.collisionGroups.get(collisionCheck[0]);
             var g2 = this.collisionGroups.get(collisionCheck[1]);
             var result = FlxG.collide(g1, g2);
-            trace('${collisionCheck}: ${result}. g1=${g1} g2=${g2}');
+            trace('${collisionCheck}: ${result}. g1=${g1.members} g2=${g2}');
         }
     }
 

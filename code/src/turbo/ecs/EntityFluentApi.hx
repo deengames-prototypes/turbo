@@ -5,6 +5,7 @@ import flixel.text.FlxText;
 
 import turbo.ecs.components.CameraComponent;
 import turbo.ecs.components.ColourComponent;
+import turbo.ecs.components.CollisionComponent;
 import turbo.ecs.components.KeyboardInputComponent;
 import turbo.ecs.components.HealthComponent;
 import turbo.ecs.components.ImageComponent;
@@ -14,7 +15,7 @@ import turbo.ecs.components.SpriteComponent;
 import turbo.ecs.components.TextComponent;
 import turbo.ecs.components.VelocityComponent;
 
-import turbo.ecs.systems.CollisionSetupSystem;
+import turbo.ecs.systems.CollisionSystem;
 
 // "Fluent" extensions on the Entity class
 class EntityFluentApi
@@ -48,10 +49,10 @@ class EntityFluentApi
             if (Container.instance != null)
             {
                 // Find the collision system
-                var collisionSystem:CollisionSetupSystem = null;
+                var collisionSystem:CollisionSystem = null;
                 for (system in Container.instance.systems)
                 {
-                    if (Std.is(system, CollisionSetupSystem))
+                    if (Std.is(system, CollisionSystem))
                     {
                         collisionSystem = cast system;
                         break;
@@ -138,19 +139,7 @@ class EntityFluentApi
     // Don't move when resolving collisions
     public static function immovable(entity:Entity):Entity
     {
-        if (entity.has(ColourComponent))
-        {
-            entity.get(ColourComponent).sprite.immovable = true;
-        }
-        else if (entity.has(ImageComponent))
-        {
-            entity.get(ImageComponent).sprite.immovable = true;
-        }
-        else
-        {
-            throw 'Cant make ${entity} immovable; it has no sprite yet.';
-        }
-
+        entity.add(new CollisionComponent(true));
         return entity;
     }
     

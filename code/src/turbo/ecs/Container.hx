@@ -3,7 +3,7 @@ package turbo.ecs;
 import turbo.ecs.TurboState;
 import turbo.ecs.components.AbstractComponent;
 import turbo.ecs.systems.AbstractSystem;
-import turbo.ecs.systems.CollisionSetupSystem;
+import turbo.ecs.systems.CollisionSystem;
 import turbo.ecs.systems.DrawColourSystem;
 import turbo.ecs.systems.DrawImageSystem;
 import turbo.ecs.systems.DrawTextSystem;
@@ -87,7 +87,7 @@ class Container
             .addSystem(new DrawColourSystem(state))
             .addSystem(new DrawTextSystem(state))
             // Done last because it requires initialized sprites
-            .addSystem(new CollisionSetupSystem());            
+            .addSystem(new CollisionSystem());            
     }
 
     public static function get_instance():Container
