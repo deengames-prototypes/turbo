@@ -36,30 +36,29 @@ class EntityFluentApi
 
     // Delegates to HaxeFlixel for collision resolution; both objects move.
     // If you want one to be static, call .immovable() on it.
-    public static function collideWith(entity:Entity, tag:String):Entity
+    public static function collideWith(entity:Entity, myTag:String, tag:String):Entity
     {
-        if (entity.tags == null || entity.tags.length == 0)
+        var collision:CollisionComponent;
+        if (!entity.has(CollisionComponent))
         {
-            throw 'Cannot collide an entity without tags! (Target tag: ${tag})';
+            collision = new CollisionComponent(myTag, [tag]);
+            entity.add(collision);
         }
 
-        for (myTag in entity.tags)
+        // I don't like this use of singleton-ish states. Null in tests.
+        if (Container.instance != null)
         {
-            // I don't like this use of singleton-ish states. Null in tests.
-            if (Container.instance != null)
+            // Find the collision system
+            var collisionSystem:CollisionSystem = null;
+            for (system in Container.instance.systems)
             {
-                // Find the collision system
-                var collisionSystem:CollisionSystem = null;
-                for (system in Container.instance.systems)
+                if (Std.is(system, CollisionSystem))
                 {
-                    if (Std.is(system, CollisionSystem))
-                    {
-                        collisionSystem = cast system;
-                        break;
-                    }
+                    collisionSystem = cast system;
+                    break;
                 }
-                collisionSystem.trackCollision(myTag, tag);
             }
+            collisionSystem.trackCollision(myTag, tag);
         }
         return entity;
     }
@@ -137,9 +136,12 @@ class EntityFluentApi
     }
 
     // Don't move when resolving collisions
-    public static function immovable(entity:Entity):Entity
+    public static function immovable(entity:Entity, myTag:String):Entity
     {
-        entity.add(new CollisionComponent(true));
+        if (!entity.has(CollisionComponent))
+        {
+            entity.add(new CollisionComponent(myTag, [], true));
+        }
         return entity;
     }
     

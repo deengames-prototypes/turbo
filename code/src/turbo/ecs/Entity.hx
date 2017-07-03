@@ -16,11 +16,6 @@ class Entity
     public var width(get, null):Int;
     public var height(get, null):Int;
 
-    // Can't write tags because we put entities in a hashmap based on tags, 
-    // and use that to determinte collisions. Erm, we have to reprocess
-    // the entity if its tags change.
-    public var tags(default, null):Array<String>;
-
     // internal: Seconds from now => event to call
     public var afterEvents(default, null):Array<AfterEvent> = new Array<AfterEvent>();
 
@@ -37,7 +32,7 @@ class Entity
     // TODO: if we need multiple handlers, change value to Array<Void->Void>
     private var eventHandlers = new Map<String, Void->Void>();
     
-    public function new(tag:String = null)
+    public function new()
     {
         Entity.nextId++;
         this.id = Entity.nextId;
@@ -45,15 +40,6 @@ class Entity
         this.container = Container.instance;
         this.components = new Map<String, AbstractComponent>();
 
-        if (tag == null)
-        {
-            this.tags = [];
-        }
-        else
-        {
-            this.tags = [tag];
-        }
-        
         // Can't auto-add entity to state because that makes collision
         // initialization really screwy (sprites are not initialized yet).
     }
@@ -181,6 +167,6 @@ class Entity
 
     public function toString():String
     {
-        return 'Entity ${this.id} (tags=${this.tags})';
+        return 'Entity #${this.id}';
     }
 }

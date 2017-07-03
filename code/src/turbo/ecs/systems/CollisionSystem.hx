@@ -6,6 +6,7 @@ import flixel.group.FlxGroup;
 import turbo.ecs.components.CollisionComponent;
 import turbo.ecs.components.ColourComponent;
 import turbo.ecs.components.ImageComponent;
+import turbo.ecs.components.SpriteComponent;
 import turbo.ecs.Entity;
 
 // Sets up tags and such for collisions. Delegates actual resolution to HaxeFlixel.
@@ -22,13 +23,12 @@ class CollisionSystem extends AbstractSystem
 
     public function new()
     {
-        // Anything with tags is game
-        super([]);
+        super([CollisionComponent, SpriteComponent]);
     }
     
     override public function entityChanged(entity:Entity):Void
     {
-        if (this.entities.indexOf(entity) == -1)
+        if (entity.has(CollisionComponent) && entity.has(SpriteComponent) && this.entities.indexOf(entity) == -1)
         {
             trace('Setup for ${entity}');
             this.setupCollisionFor(entity);
@@ -72,7 +72,9 @@ class CollisionSystem extends AbstractSystem
             var g1 = this.collisionGroups.get(collisionCheck[0]);
             var g2 = this.collisionGroups.get(collisionCheck[1]);
             var result = FlxG.collide(g1, g2);
-            trace('${collisionCheck}: ${result}. g1=${g1.members} g2=${g2}');
+            if (result == true) {
+                trace('${collisionCheck}: ${result}. g1=${g1.members} g2=${g2.members}');
+            }
         }
     }
 
@@ -94,42 +96,41 @@ class CollisionSystem extends AbstractSystem
 
     private function setupCollisionFor(entity:Entity):Void
     {
-        // Add one FlxGroup per tag so we can collide groups later
-        for (tag in entity.tags)
+        var cc = entity.get(CollisionComponent);
+    // Add one FlxGroup per tag so we can collide groups later
+        var tag = cc.myTag;
+        if (!this.collisionGroups.exists(tag))
         {
-            if (!this.collisionGroups.exists(tag))
+            this.collisionGroups.set(tag, new FlxGroup());
+        }
+        
+        var sprite:FlxSprite = null;
+        if (entity.has(ColourComponent))
+        {
+            sprite = entity.get(ColourComponent).sprite;
+            entitiesToProcess.remove(entity);
+            trace('set up collision for e=${entity}: ${entitiesToProcess.length}');
+        }
+        else if (entity.has(ImageComponent))
+        {
+            sprite = entity.get(ImageComponent).sprite;
+            entitiesToProcess.remove(entity);
+            trace('set up collision for e=${entity}: ${entitiesToProcess.length}');                
+        }
+        
+        if (sprite != null &&
+            // Not already in the group
+            this.collisionGroups.get(tag).members.indexOf(sprite) == -1)
+        {
+            trace('Adding ${sprite} to ${tag}!!!');
+            this.collisionGroups.get(tag).add(sprite);
+        }
+        else
+        {
+            trace('Cant set up collisions for ${entity}; no sprite yet.');
+            if (entitiesToProcess.indexOf(entity) == -1)
             {
-                this.collisionGroups.set(tag, new FlxGroup());
-            }
-            
-            var sprite:FlxSprite = null;
-            if (entity.has(ColourComponent))
-            {
-                sprite = entity.get(ColourComponent).sprite;
-                entitiesToProcess.remove(entity);
-                trace('set up collision for e=${entity}: ${entitiesToProcess.length}');
-            }
-            else if (entity.has(ImageComponent))
-            {
-                sprite = entity.get(ImageComponent).sprite;
-                entitiesToProcess.remove(entity);
-                trace('set up collision for e=${entity}: ${entitiesToProcess.length}');                
-            }
-            
-            if (sprite != null &&
-                // Not already in the group
-                this.collisionGroups.get(tag).members.indexOf(sprite) == -1)
-            {
-                trace('Adding ${sprite} to ${tag}!!!');
-                this.collisionGroups.get(tag).add(sprite);
-            }
-            else
-            {
-                trace('Cant set up collisions for ${entity}; no sprite yet.');
-                if (entitiesToProcess.indexOf(entity) == -1)
-                {
-                    this.entitiesToProcess.push(entity);
-                }
+                this.entitiesToProcess.push(entity);
             }
         }
     }
