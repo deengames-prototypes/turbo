@@ -16,8 +16,6 @@ class Entity
     public var width(get, null):Int;
     public var height(get, null):Int;
 
-    private var components:Map<String, AbstractComponent>; // Can change AbstractComponent to Any
-
     // Can't write tags because we put entities in a hashmap based on tags, 
     // and use that to determinte collisions. Erm, we have to reprocess
     // the entity if its tags change.
@@ -25,6 +23,12 @@ class Entity
 
     // internal: Seconds from now => event to call
     public var afterEvents(default, null):Array<AfterEvent> = new Array<AfterEvent>();
+
+    public var id(default, null):Int;
+
+    private static var nextId:Int = 0;
+
+    private var components:Map<String, AbstractComponent>; // Can change AbstractComponent to Any
 
     // Arbitrary key/value pairs
     private var data = new Map<String, Any>();
@@ -35,6 +39,9 @@ class Entity
     
     public function new(tag:String = null)
     {
+        Entity.nextId++;
+        this.id = Entity.nextId;
+
         this.container = Container.instance;
         this.components = new Map<String, AbstractComponent>();
 
@@ -168,5 +175,12 @@ class Entity
     public function get_height():Int
     {
         return Std.int(this.get(SpriteComponent).sprite.height);
+    }
+
+    // For debugging
+
+    public function toString():String
+    {
+        return 'Entity ${this.id} (tags=${this.tags})';
     }
 }

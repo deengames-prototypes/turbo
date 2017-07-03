@@ -27,15 +27,20 @@ class CollisionSetupSystem extends AbstractSystem
     
     override public function entityChanged(entity:Entity):Void
     {
-        super.entityChanged(entity);
-        this.setupCollisionFor(entity, true);
+        if (this.entities.indexOf(entity) == -1)
+        {
+            trace('Setup for ${entity}');
+            this.setupCollisionFor(entity);
+        }
+
+        super.entityChanged(entity);        
     }
 
     override public function update(elapsedSeconds:Float):Void
     {
         for (e in this.entitiesToProcess)
         {
-            this.setupCollisionFor(e, false);
+            this.setupCollisionFor(e);
         }
 
         super.update(elapsedSeconds);
@@ -43,7 +48,8 @@ class CollisionSetupSystem extends AbstractSystem
         {
             var g1 = this.collisionGroups.get(collisionCheck[0]);
             var g2 = this.collisionGroups.get(collisionCheck[1]);
-            var rVal = FlxG.collide(g1, g2);
+            var result = FlxG.collide(g1, g2);
+            trace('${collisionCheck}: ${result}. g1=${g1} g2=${g2}');
         }
     }
 
@@ -63,7 +69,7 @@ class CollisionSetupSystem extends AbstractSystem
         this.collisionChecks.push([tag1, tag2]);
     }
 
-    private function setupCollisionFor(entity:Entity, retryIfFail:Bool):Void
+    private function setupCollisionFor(entity:Entity):Void
     {
         // Add one FlxGroup per tag so we can collide groups later
         for (tag in entity.tags)
@@ -77,23 +83,30 @@ class CollisionSetupSystem extends AbstractSystem
             if (entity.has(ColourComponent))
             {
                 sprite = entity.get(ColourComponent).sprite;
+                entitiesToProcess.remove(entity);
+                trace('set up collision for e=${entity}: ${entitiesToProcess.length}');
             }
             else if (entity.has(ImageComponent))
             {
                 sprite = entity.get(ImageComponent).sprite;
+                entitiesToProcess.remove(entity);
+                trace('set up collision for e=${entity}: ${entitiesToProcess.length}');                
+            }
+            
+            if (sprite != null &&
+                // Not already in the group
+                this.collisionGroups.get(tag).members.indexOf(sprite) == -1)
+            {
+                trace('Adding ${sprite} to ${tag}!!!');
+                this.collisionGroups.get(tag).add(sprite);
             }
             else
             {
-                if (retryIfFail)
+                trace('Cant set up collisions for ${entity}; no sprite yet.');
+                if (entitiesToProcess.indexOf(entity) == -1)
                 {
-                    // Process later if it doesn't have a sprite yet
-                    this.entitiesToProcess.remove(entity); // No dupes plzkthx
                     this.entitiesToProcess.push(entity);
                 }
-            }
-            if (sprite != null)
-            {
-                this.collisionGroups.get(tag).add(sprite);
             }
         }
     }

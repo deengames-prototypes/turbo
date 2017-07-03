@@ -146,6 +146,10 @@ class EntityFluentApi
         {
             entity.get(ImageComponent).sprite.immovable = true;
         }
+        else
+        {
+            throw 'Cant make ${entity} immovable; it has no sprite yet.';
+        }
 
         return entity;
     }
@@ -167,7 +171,7 @@ class EntityFluentApi
         p.y = y;
         p.moveToX = x;
         p.moveToY = y;
-
+        
         return entity;
     } 
     

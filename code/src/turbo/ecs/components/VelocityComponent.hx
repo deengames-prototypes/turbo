@@ -21,13 +21,15 @@ class VelocityComponent extends AbstractComponent
         this.velocities.set(name, new FlxPoint(vx, vy));
         
         // Recalculate final velocity
-        this.velocity.x = 0;
-        this.velocity.y = 0;
+        var vx:Float = 0;
+        var vy:Float = 0;
 
         for (v in this.velocities)
         {
-            this.velocity.x += v.x;
-            this.velocity.y += v.y;
+            vx += v.x;
+            vy += v.y;
         }
+
+        this.velocity = new FlxPoint(vx, vy);
     }
 }
