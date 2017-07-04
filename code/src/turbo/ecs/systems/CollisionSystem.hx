@@ -13,9 +13,6 @@ import turbo.ecs.Entity;
 // On update, calls FlxG.collide, which resolves collisions.
 class CollisionSystem extends AbstractSystem
 {
-    // Entities to process later; they don't have an initialized sprite yet
-    private var entitiesToProcess = new Array<Entity>();
-
     // FlxGroups for collisions, by tag
     private var collisionGroups = new Map<String, FlxGroup>();
     // Pairs of collisions to check, eg. ["player", "walls"] + ["bullet", "player"]
@@ -45,11 +42,6 @@ class CollisionSystem extends AbstractSystem
 
     override public function update(elapsedSeconds:Float):Void
     {
-        for (e in this.entitiesToProcess)
-        {
-            this.setupCollisionFor(e);
-        }
-
         // If sprites change, make sure immovable entities are still immovable
         for (e in this.entities)
         {
@@ -106,14 +98,12 @@ class CollisionSystem extends AbstractSystem
         if (entity.has(ColourComponent))
         {
             sprite = entity.get(ColourComponent).sprite;
-            entitiesToProcess.remove(entity);
-            trace('set up collision for e=${entity}: ${entitiesToProcess.length}');
+            trace('set up collision for e=${entity}');
         }
         else if (entity.has(ImageComponent))
         {
             sprite = entity.get(ImageComponent).sprite;
-            entitiesToProcess.remove(entity);
-            trace('set up collision for e=${entity}: ${entitiesToProcess.length}');                
+            trace('set up collision for e=${entity}');                
         }
         
         if (sprite != null &&
@@ -125,11 +115,7 @@ class CollisionSystem extends AbstractSystem
         }
         else
         {
-            trace('Cant set up collisions for ${entity}; no sprite yet.');
-            if (entitiesToProcess.indexOf(entity) == -1)
-            {
-                this.entitiesToProcess.push(entity);
-            }
+            throw 'Cant set up collisions for ${entity}; no sprite yet.';
         }
     }
 }
