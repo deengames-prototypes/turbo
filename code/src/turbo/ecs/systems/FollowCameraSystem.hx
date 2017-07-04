@@ -16,10 +16,9 @@ class FollowCameraSystem extends AbstractSystem
         super([CameraComponent, SpriteComponent]);
     }
     
-    override public function entityChanged(entity:Entity):Void
+    override public function entityRemoved(entity:Entity):Void
     {
-        super.entityChanged(entity);
-        
+        super.entityRemoved(entity);
         if (this.entities.length == 0)
         {
             if (FlxG.camera.target != null)
@@ -27,12 +26,18 @@ class FollowCameraSystem extends AbstractSystem
                 FlxG.camera.follow(null);
             }
         }
-        else if (this.entities.length == 1)
+    }
+
+    override public function entityAdded(entity:Entity):Void
+    {
+        super.entityAdded(entity);
+        
+        if (this.entities.length == 1)
         {   
             var sprite:SpriteComponent = this.entities[0].get(SpriteComponent);
 
             if (sprite != null && sprite.sprite != null && FlxG.camera.target != sprite.sprite)
-            {   
+            {
                 FlxG.camera.follow(sprite.sprite);
             }
         }
