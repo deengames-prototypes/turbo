@@ -29,6 +29,16 @@ class CollisionSystem extends AbstractSystem
     override public function entityAdded(entity:Entity):Void
     {
         super.entityAdded(entity);
+        
+        // Make sure we track all entities' tags so we have groups when we need them.
+        // (the user can ask for a collision after creating new entities).
+        // Add one FlxGroup per tag so we can collide groups later.
+        var tag:String = entity.tag;
+        if (tag != null && tag != "" && !this.collisionGroups.exists(tag))
+        {
+            this.collisionGroups.set(tag, new FlxGroup());
+        }
+
         trace('Setup for ${entity}');
         this.setupCollisionFor(entity);
     }
@@ -92,13 +102,6 @@ class CollisionSystem extends AbstractSystem
 
     private function setupCollisionFor(entity:Entity):Void
     {
-        // Add one FlxGroup per tag so we can collide groups later
-        var tag = entity.tag;
-        if (!this.collisionGroups.exists(tag))
-        {
-            this.collisionGroups.set(tag, new FlxGroup());
-        }
-        
         var sprite:FlxSprite = null;
         if (entity.has(ColourComponent))
         {
@@ -115,10 +118,10 @@ class CollisionSystem extends AbstractSystem
         
         if (sprite != null &&
             // Not already in the group
-            this.collisionGroups.get(tag).members.indexOf(sprite) == -1)
+            this.collisionGroups.get(entity.tag).members.indexOf(sprite) == -1)
         {
-            trace('Adding ${sprite} to ${tag}!!!');
-            this.collisionGroups.get(tag).add(sprite);
+            trace('Adding ${sprite} to ${entity.tag}!!!');
+            this.collisionGroups.get(entity.tag).add(sprite);
         }
         else
         {
