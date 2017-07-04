@@ -31,7 +31,8 @@ class DrawImageSystem extends AbstractSystem
             var image:ImageComponent = entity.get(ImageComponent);
             var position:PositionComponent = entity.get(PositionComponent);
 
-            if (image.image != previousImages.get(entity))
+            var previous = previousImages.get(entity);
+            if (previous != null && image.image != previous)
             {
                 // Image changed. Force update.
                 this.state.remove(image.sprite);
@@ -65,10 +66,12 @@ class DrawImageSystem extends AbstractSystem
                 if (image.isRepeating)
                 {
                     image.sprite = new FlxBackdrop(image.image);
+                    trace('Sprite for ${entity} is now ${image.sprite}');
                 }
                 else
                 {
                     image.sprite = new FlxSprite(0, 0, image.image);
+                    trace('Sprite for ${entity} (${image.sprite}) is now ${image.sprite}');
                 }
                 this.state.add(image.sprite);
             }

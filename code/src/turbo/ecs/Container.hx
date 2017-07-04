@@ -87,7 +87,7 @@ class Container
             .addSystem(new DrawColourSystem(state))
             .addSystem(new DrawTextSystem(state))
             // Done last because it requires initialized sprites
-            .addSystem(new CollisionSystem());            
+            .addSystem(new CollisionSystem());        
     }
 
     public static function get_instance():Container

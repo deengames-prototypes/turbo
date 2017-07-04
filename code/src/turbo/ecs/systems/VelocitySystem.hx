@@ -31,6 +31,7 @@ class VelocitySystem extends AbstractSystem
             var position = entity.get(PositionComponent);
             position.x = sprite.sprite.x;
             position.y = sprite.sprite.y;
+            trace('V: sprite is at ${sprite.sprite.x}, ${sprite.sprite.y}');
         }
     }
 }

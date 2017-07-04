@@ -13,9 +13,9 @@ import turbo.ecs.Entity;
 // On update, calls FlxG.collide, which resolves collisions.
 class CollisionSystem extends AbstractSystem
 {
-    // FlxGroups for collisions, by tag
+    // FlxGroups for collisions. Tag => sprites with that tag
     private var collisionGroups = new Map<String, FlxGroup>();
-    // Pairs of collisions to check, eg. ["player", "walls"] + ["bullet", "player"]
+    // Pairs of collisions to check, eg. ["player", "walls"], ["bullet", "player"]
     private var collisionChecks = new Array<Array<String>>();
 
     public function new()
@@ -23,10 +23,10 @@ class CollisionSystem extends AbstractSystem
         super([CollisionComponent, SpriteComponent]);
     }
     
-    override public function entityAdded(entity:Entity):Void
+    override public function entityChanged(entity:Entity):Void
     {
-        super.entityAdded(entity);
-        
+        super.entityChanged(entity);
+
         // Make sure we track all entities' tags so we have groups when we need them.
         // (the user can ask for a collision after creating new entities).
         // Add one FlxGroup per tag so we can collide groups later.
@@ -36,8 +36,11 @@ class CollisionSystem extends AbstractSystem
             this.collisionGroups.set(tag, new FlxGroup());
         }
 
-        trace('Setup for ${entity}');
-        this.setupCollisionFor(entity);
+        if (entity.has(SpriteComponent) && entity.has(CollisionComponent))
+        {
+            trace('Setup for ${entity}');            
+            this.setupCollisionFor(entity); 
+        }
     }
 
     override public function update(elapsedSeconds:Float):Void
@@ -70,6 +73,7 @@ class CollisionSystem extends AbstractSystem
             var g1 = this.collisionGroups.get(collisionCheck[0]);
             var g2 = this.collisionGroups.get(collisionCheck[1]);
             var result = FlxG.collide(g1, g2);
+            trace('${collisionCheck}: ${g1.members} vs. ${g2.members} => ${result}');            
             if (result == true) {
                 trace('${collisionCheck}: ${result}. g1=${g1.members} g2=${g2.members}');
             }
@@ -94,24 +98,26 @@ class CollisionSystem extends AbstractSystem
 
     private function setupCollisionFor(entity:Entity):Void
     {
+        // If we had a previous sprite, we don't know it, and can't remove it
+        // For now, that's okay, just track the new sprite.
         var sprite:FlxSprite = null;
         if (entity.has(ColourComponent))
         {
             sprite = entity.get(ColourComponent).sprite;
-            trace('set up collision for e=${entity}');
         }
         else if (entity.has(ImageComponent))
         {
             sprite = entity.get(ImageComponent).sprite;
-            trace('set up collision for e=${entity}');                
         }
         
-        if (sprite != null &&
-            // Not already in the group
-            this.collisionGroups.get(entity.tag).members.indexOf(sprite) == -1)
+        if (sprite != null)            
         {
-            trace('Adding ${sprite} to ${entity.tag}!!!');
-            this.collisionGroups.get(entity.tag).add(sprite);
+            // Not already in the group
+            if (this.collisionGroups.get(entity.tag).members.indexOf(sprite) == -1)
+            {
+                trace('Collision for ${entity} is based on ${sprite}');
+                this.collisionGroups.get(entity.tag).add(sprite);
+            }
         }
         else
         {
